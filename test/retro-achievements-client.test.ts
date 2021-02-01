@@ -40,7 +40,7 @@ describe('RetroAchievementsClient', () => {
       server = setupServer(
         rest.get(
           'https://retroachievements.org/API/API_GetConsoleIDs.php',
-          (req, res, ctx) => {
+          (_, res, ctx) => {
             return res(ctx.json(mockConsoleIds));
           }
         )
