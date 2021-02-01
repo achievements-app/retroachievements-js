@@ -8,7 +8,7 @@ export class RetroAchievementsClient {
 
   constructor(private userName: string, private apiKey: string) {}
 
-  async consoleIds(): Promise<fromModels.ConsoleId[] | void> {
+  async getConsoleIds(): Promise<fromModels.ConsoleId[] | void> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetConsoleIDs.php', {
       ...this.buildAuthParameters(),
     });
@@ -16,6 +16,8 @@ export class RetroAchievementsClient {
     try {
       const httpResponse = await fetch(requestUrl);
       const responseBody = (await httpResponse.json()) as fromModels.ApiConsoleId[];
+
+      console.log(responseBody);
 
       return responseBody.map(apiConsoleId => ({
         id: Number(apiConsoleId.ID),
