@@ -17,8 +17,6 @@ export class RetroAchievementsClient {
       const httpResponse = await fetch(requestUrl);
       const responseBody = (await httpResponse.json()) as fromModels.ApiConsoleId[];
 
-      console.log(responseBody);
-
       return responseBody.map(apiConsoleId => ({
         id: Number(apiConsoleId.ID),
         name: apiConsoleId.Name,
@@ -33,7 +31,7 @@ export class RetroAchievementsClient {
 
   async getUserRankAndScore(
     userName: string
-  ): Promise<fromModels.UserRankAndScore | void> {
+  ): Promise<fromModels.UserRankAndScore | null | void> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetUserRankAndScore.php', {
       ...this.buildAuthParameters(),
       u: userName,
@@ -42,6 +40,10 @@ export class RetroAchievementsClient {
     try {
       const httpResponse = await fetch(requestUrl);
       const responseBody = (await httpResponse.json()) as fromModels.ApiUserRankAndScore;
+
+      if (responseBody.Score === null) {
+        throw 'User not found';
+      }
 
       return {
         score: responseBody.Score,
@@ -56,7 +58,9 @@ export class RetroAchievementsClient {
     }
   }
 
-  async gameInfoByGameId(gameId: number): Promise<fromModels.GameInfo | void> {
+  async getGameInfoByGameId(
+    gameId: number
+  ): Promise<fromModels.GameInfo | void> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetGame.php', {
       ...this.buildAuthParameters(),
       i: gameId,
@@ -75,7 +79,7 @@ export class RetroAchievementsClient {
     }
   }
 
-  async gameInfoExtendedByGameId(
+  async getGameInfoExtendedByGameId(
     gameId: number
   ): Promise<fromModels.GameInfoExtended | void> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetGameExtended.php', {
@@ -111,7 +115,7 @@ export class RetroAchievementsClient {
     }
   }
 
-  async gameListByConsoleId(
+  async getGameListByConsoleId(
     consoleId: number
   ): Promise<fromModels.GameListEntity[] | void> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetGameList.php', {
@@ -138,7 +142,7 @@ export class RetroAchievementsClient {
     }
   }
 
-  async topTenUsers(): Promise<fromModels.TopTenUser[] | void> {
+  async getTopTenUsers(): Promise<fromModels.TopTenUser[] | void> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetTopTenUsers.php', {
       ...this.buildAuthParameters(),
     });

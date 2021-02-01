@@ -1,5 +1,5 @@
 export interface ApiUserRankAndScore {
-  Score: number;
+  Score: number | null;
   Rank: string;
   TotalRanked: string;
 }
