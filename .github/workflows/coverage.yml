@@ -9,5 +9,5 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_REPORTER_ID }}
         with:
-          coverageCommand: npm run coverage
+          coverageCommand: yarn test --coverage --maxWorkers=2
           debug: true
