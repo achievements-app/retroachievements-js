@@ -36,11 +36,7 @@
   "module": "dist/retroachievements-nodejs-api.esm.js",
   "size-limit": [
     {
-      "path": "dist/retroachievements-nodejs-api.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/retroachievements-nodejs-api.esm.js",
+      "path": "dist/retroachievements-js.cjs.production.min.js",
       "limit": "10 KB"
     }
   ],

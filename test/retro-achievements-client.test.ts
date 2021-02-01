@@ -168,5 +168,154 @@ describe('RetroAchievementsClient', () => {
       expect(gameInfo.forumTopicId).toEqual(111);
       expect(gameInfo.gameTitle).toEqual('Super Mario Land');
     });
+
+    it('throws an error and has no return if the game is not found', async () => {
+      // ARRANGE
+      const consoleErrorSpy = spyOn(console, 'error');
+
+      const mockGameInfo: fromModels.ApiGameInfo = {
+        GameTitle: 'UNRECOGNISED',
+        ConsoleID: null,
+        Console: null,
+        ForumTopicID: null,
+      };
+
+      server = setupServer(
+        rest.get(
+          'https://retroachievements.org/API/API_GetGame.php',
+          (_, res, ctx) => {
+            return res(ctx.json(mockGameInfo));
+          }
+        )
+      );
+
+      server.listen();
+
+      // ACT
+      const gameInfo = (await client.getGameInfoByGameId(
+        504
+      )) as fromModels.GameInfo;
+
+      // ASSERT
+      expect(gameInfo).not.toBeDefined();
+      expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('getGameInfoExtendedByGameId', () => {
+    it('given a game id, returns the extended game info', async () => {
+      // ARRANGE
+      const mockAchievementOne: fromModels.ApiAchievement = {
+        ID: '1144',
+        NumAwarded: '5632',
+        NumAwardedHardcore: '2604',
+        Title: 'Mushroom Man',
+        Description: 'Grab a mushroom',
+        Points: '1',
+        TrueRatio: '1',
+        Author: 'qwe',
+        DateModified: '2020-02-24 20:25:25',
+        DateCreated: '2013-05-22 13:12:10',
+        BadgeName: '109695',
+        DisplayOrder: '1',
+        MemAddr: 'ce2ebf6f40272f66b1c0dc972f18665d',
+      };
+
+      const mockAchievementTwo: fromModels.ApiAchievement = {
+        ID: '75397',
+        NumAwarded: '3071',
+        NumAwardedHardcore: '1408',
+        Title: 'Weaponized Balls',
+        Description:
+          'Grab a Superball Flower from an item box and obtain the Superball ability',
+        Points: '2',
+        TrueRatio: '2',
+        Author: 'stfN1337',
+        DateModified: '2020-02-24 20:25:27',
+        DateCreated: '2019-04-11 22:41:01',
+        BadgeName: '109696',
+        DisplayOrder: '2',
+        MemAddr: '67f757eb24b56b2f0205ce502bcee91c',
+      };
+
+      const mockGameInfoExtended: fromModels.ApiGameInfoExtended = {
+        ID: 504,
+        Title: 'Super Mario Land',
+        ConsoleID: 4,
+        ForumTopicID: 111,
+        Flags: 0,
+        ImageIcon: '/Images/024529.png',
+        ImageTitle: '/Images/033032.png',
+        ImageIngame: '/Images/033033.png',
+        ImageBoxArt: '/Images/024327.png',
+        Publisher: 'Nintendo',
+        Developer: 'Nintendo',
+        Genre: 'Platformer',
+        Released: 'April 21, 1989',
+        IsFinal: false,
+        ConsoleName: 'Game Boy',
+        RichPresencePatch: 'c8803c3f8aa144cdcce92e96b7abedfb',
+        NumAchievements: 37,
+        NumDistinctPlayersCasual: '5632',
+        NumDistinctPlayersHardcore: '2604',
+        Achievements: {
+          1144: mockAchievementOne,
+          75397: mockAchievementTwo,
+        },
+      };
+
+      server = setupServer(
+        rest.get(
+          'https://retroachievements.org/API/API_GetGameExtended.php',
+          (_, res, ctx) => {
+            return res(ctx.json(mockGameInfoExtended));
+          }
+        )
+      );
+
+      server.listen();
+
+      // ACT
+      const gameInfoExtended = (await client.getGameInfoExtendedByGameId(
+        504
+      )) as fromModels.GameInfoExtended;
+
+      // ASSERT
+      expect(gameInfoExtended).toBeDefined();
+      expect(gameInfoExtended.achievements).toHaveLength(2);
+      expect(gameInfoExtended.consoleName).toEqual('Game Boy');
+      expect(gameInfoExtended.id).toEqual(504);
+      expect(gameInfoExtended.achievements[0].title).toEqual('Mushroom Man');
+    });
+
+    it('throws an error and has no return if the game is not found', async () => {
+      // ARRANGE
+      const consoleErrorSpy = spyOn(console, 'error');
+
+      const mockGameInfoExtended: fromModels.ApiGameInfoExtended = {
+        Achievements: [],
+        RichPresencePatch: 'd41d8cd98f00b204e9800998ecf8427e',
+      };
+
+      server = setupServer(
+        rest.get(
+          'https://retroachievements.org/API/API_GetGameExtended.php',
+          (_, res, ctx) => {
+            return res(ctx.json(mockGameInfoExtended));
+          }
+        )
+      );
+
+      server.listen();
+
+      // ACT
+      const gameInfoExtended = (await client.getGameInfoExtendedByGameId(
+        504
+      )) as fromModels.GameInfoExtended;
+
+      // ASSERT
+      expect(gameInfoExtended).not.toBeDefined();
+      expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+    });
   });
 });

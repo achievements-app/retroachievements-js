@@ -70,6 +70,10 @@ export class RetroAchievementsClient {
       const httpResponse = await fetch(requestUrl);
       const responseBody = (await httpResponse.json()) as fromModels.ApiGameInfo;
 
+      if (responseBody.GameTitle === 'UNRECOGNISED') {
+        throw 'Game not found';
+      }
+
       return this.sanitizeApiGameInfo(responseBody) as fromModels.GameInfo;
     } catch (err) {
       console.error(
@@ -90,6 +94,10 @@ export class RetroAchievementsClient {
     try {
       const httpResponse = await fetch(requestUrl);
       const responseBody = (await httpResponse.json()) as fromModels.ApiGameInfoExtended;
+
+      if (responseBody.ID === undefined) {
+        throw 'Game not found';
+      }
 
       return {
         ...this.sanitizeApiGameInfo(responseBody),
@@ -171,9 +179,13 @@ export class RetroAchievementsClient {
     };
   }
 
-  private sanitizeAchievements(apiAchievements: {
-    [name: string]: fromModels.ApiAchievement;
-  }) {
+  private sanitizeAchievements(
+    apiAchievements:
+      | any[]
+      | {
+          [name: string]: fromModels.ApiAchievement;
+        }
+  ) {
     const achievements: fromModels.Achievement[] = [];
 
     for (const [_, apiAchievement] of Object.entries(apiAchievements)) {

@@ -1,11 +1,11 @@
 export interface ApiGameInfo {
   GameTitle: string;
-  ConsoleID: string | null;
+  ConsoleID: string | number | null;
   Console: string | null;
-  ForumTopicID: string | null;
+  ForumTopicID: string | number | null;
   Title?: string;
   ConsoleName?: string;
-  Flags?: string | null;
+  Flags?: string | number | null;
   ImageIcon?: string;
   GameIcon?: string;
   ImageTitle?: string;

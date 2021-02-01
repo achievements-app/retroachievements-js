@@ -3,9 +3,11 @@ import { ApiGameInfo } from './api-game-info.model';
 
 export interface ApiGameInfoExtended extends Partial<ApiGameInfo> {
   RichPresencePatch: string;
-  Achievements: {
-    [name: string]: ApiAchievement;
-  };
+  Achievements:
+    | any[]
+    | {
+        [name: string]: ApiAchievement;
+      };
 
   ID?: number;
   IsFinal?: boolean;
