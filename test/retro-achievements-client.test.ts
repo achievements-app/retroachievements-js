@@ -9,7 +9,10 @@ describe('RetroAchievementsClient', () => {
   let server: SetupServerApi;
 
   beforeEach(() => {
-    client = new RetroAchievementsClient('mockUserName', 'mockApiKey');
+    client = new RetroAchievementsClient({
+      userName: 'MockUserName',
+      apiKey: 'MockApiKey',
+    });
   });
 
   afterEach(() => {
