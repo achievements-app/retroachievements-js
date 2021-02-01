@@ -26,12 +26,13 @@
 
 ## Features
 
-- Aligns with the [official RetroAchievements web API](http://retroachievements.org/APIDemo.php)
-- Supports Node environments
-- Supports browsers
-- Supports TypeScript
+- Aligns with the [official RetroAchievements web API](http://retroachievements.org/APIDemo.php).
+- Supports Node environments.
+- Supports browsers.
+- Supports TypeScript.
+- Small, <10Kb.
 
-## Documentation
+## Contents
 
 1. [Getting started](#getting-started)
 2. [Examples](#examples)
@@ -61,7 +62,22 @@ import { RetroAchievementsClient } from 'retroachievements-js';
 
 ## Examples
 
-TODO
+### Initializing the Client
+
+To initialize the client, you will need your username and your RetroAchievements Web API key. To get your Web API key, visit [your control panel](http://retroachievements.org/controlpanel.php) on the RetroAchievements website.
+
+You can initialize the client like so:
+
+```typescript
+import { RetroAchievementsClient } from 'retroachievements-js';
+
+const client = new RetroAchievementsClient({
+  userName: 'MyUserName', // this is your actual account name on the site
+  apiKey: 'MyApiKey',
+});
+```
+
+Please note **if you are using this library in the browser then your API key will be exposed.** This is not destructive, as the API is read-only, but this could change at any time. For this reason, I recommend only using this library on the server where your API key can be kept a secret.
 
 ## API Reference
 

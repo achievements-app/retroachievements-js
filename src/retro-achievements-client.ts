@@ -5,8 +5,13 @@ import * as fromModels from './models';
 
 export class RetroAchievementsClient {
   private baseUrl = 'https://retroachievements.org/API';
+  private apiKey: string;
+  private userName: string;
 
-  constructor(private userName: string, private apiKey: string) {}
+  constructor(options: { userName: string; apiKey: string }) {
+    this.apiKey = options.apiKey;
+    this.userName = options.userName;
+  }
 
   async getConsoleIds(): Promise<fromModels.ConsoleId[] | void> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetConsoleIDs.php', {
