@@ -5,12 +5,21 @@
 <h4 align="center">🎮 &nbsp; A universal JavaScript wrapper for the RetroAchievements PHP API.</h4>
 
 <p align="center">
+  <a href="https://github.com/prettier/prettier">
+    <img src="https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=flat-square" alt="Styled with Prettier">
+  </a>
 
-[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-[![Maintainability](https://api.codeclimate.com/v1/badges/60d0877dfbb6b27db65e/maintainability)](https://codeclimate.com/github/wescopeland/retroachievements-js/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/60d0877dfbb6b27db65e/test_coverage)](https://codeclimate.com/github/wescopeland/retroachievements-js/test_coverage)
+  <a href="http://commitizen.github.io/cz-cli/">
+    <img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg" alt="Commitizen Friendly">
+  </a>
 
+  <a href="https://codeclimate.com/github/wescopeland/retroachievements-js/maintainability">
+    <img src="https://api.codeclimate.com/v1/badges/60d0877dfbb6b27db65e/maintainability" alt="Codeclimate Maintainability">
+  </a>
+
+  <a href="https://codeclimate.com/github/wescopeland/retroachievements-js/test_coverage">
+    <img src="https://api.codeclimate.com/v1/badges/60d0877dfbb6b27db65e/test_coverage" alt="Code Coverage">
+  </a>
 </p>
 
 <hr />
