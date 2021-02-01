@@ -1,0 +1,10 @@
+name: Publish Coverage
+on: [push]
+steps:
+  - name: Test & publish code coverage
+    uses: paambaati/codeclimate-action@v2.5.7
+    env:
+      CC_TEST_REPORTER_ID: ${{ secrets.CC_REPORTER_ID }}
+    with:
+      coverageCommand: npm run coverage
+      debug: true
