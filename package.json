@@ -42,6 +42,7 @@
   ],
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.9.2",
+    "@types/traverse": "^0.6.32",
     "husky": "^4.3.8",
     "msw": "^0.26.0",
     "size-limit": "^4.9.2",
@@ -52,6 +53,7 @@
   "dependencies": {
     "camelcase-keys": "^6.2.2",
     "cross-fetch": "^3.0.6",
+    "traverse": "^0.6.6",
     "urlcat": "^2.0.4"
   }
 }

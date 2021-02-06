@@ -1,7 +1,9 @@
 import urlcat from 'urlcat';
 import fetch from 'cross-fetch';
+import camelcaseKeys from 'camelcase-keys';
 
 import * as fromModels from './models';
+import { sanitizeProps } from './util/sanitizeProps';
 
 export class RetroAchievementsClient {
   private baseUrl = 'https://retroachievements.org/API';
@@ -22,10 +24,7 @@ export class RetroAchievementsClient {
       const httpResponse = await fetch(requestUrl);
       const responseBody = (await httpResponse.json()) as fromModels.ApiConsoleId[];
 
-      return responseBody.map(apiConsoleId => ({
-        id: Number(apiConsoleId.ID),
-        name: apiConsoleId.Name,
-      }));
+      return camelcaseKeys(sanitizeProps(responseBody));
     } catch (err) {
       console.error(
         'RetroAchievements API: There was a problem retrieving the console IDs.',
@@ -50,11 +49,7 @@ export class RetroAchievementsClient {
         throw 'User not found';
       }
 
-      return {
-        score: responseBody.Score,
-        rank: Number(responseBody.Rank),
-        totalRanked: Number(responseBody.TotalRanked),
-      };
+      return camelcaseKeys(sanitizeProps(responseBody));
     } catch (err) {
       console.error(
         `RetroAchievements API: There was a problem retrieving the rank and score for user ${userName}.`,
@@ -140,13 +135,7 @@ export class RetroAchievementsClient {
       const httpResponse = await fetch(requestUrl);
       const responseBody = (await httpResponse.json()) as fromModels.ApiGameListEntity[];
 
-      return responseBody.map(apiGameListEntity => ({
-        title: apiGameListEntity.Title,
-        id: Number(apiGameListEntity.ID),
-        consoleId: Number(apiGameListEntity.ConsoleID),
-        imageIcon: apiGameListEntity.ImageIcon,
-        consoleName: apiGameListEntity.ConsoleName,
-      }));
+      return camelcaseKeys(sanitizeProps(responseBody));
     } catch (err) {
       console.error(
         'RetroAchievements API: There was a problem retrieving the console game list.',
@@ -199,13 +188,8 @@ export class RetroAchievementsClient {
         // A key of 0 means the game couldn't be found in the RetroAchievements system.
         if (key !== '0') {
           progressItems.push({
+            ...camelcaseKeys(sanitizeProps(value)),
             gameId: Number(key),
-            numPossibleAchievements: Number(value.NumPossibleAchievements),
-            possibleScore: Number(value.PossibleScore),
-            numAchieved: value.NumAchieved,
-            scoreAchieved: value.ScoreAchieved,
-            numAchievedHardcore: value.NumAchievedHardcore,
-            scoreAchievedHardcore: value.ScoreAchievedHardcore,
           });
         }
       }
@@ -237,25 +221,7 @@ export class RetroAchievementsClient {
       const httpResponse = await fetch(requestUrl);
       const responseBody = (await httpResponse.json()) as fromModels.ApiUserRecentlyPlayedGame[];
 
-      const recentlyPlayedGames: fromModels.UserRecentlyPlayedGame[] = responseBody.map(
-        apiRecentGame => ({
-          gameId: Number(apiRecentGame.GameID),
-          consoleId: Number(apiRecentGame.ConsoleID),
-          consoleName: apiRecentGame.ConsoleName,
-          title: apiRecentGame.Title,
-          imageIcon: apiRecentGame.ImageIcon,
-          lastPlayed: new Date(apiRecentGame.LastPlayed),
-          myVote: apiRecentGame.MyVote ? Number(apiRecentGame.MyVote) : null,
-          numPossibleAchievements: Number(
-            apiRecentGame.NumPossibleAchievements
-          ),
-          possibleScore: Number(apiRecentGame.PossibleScore),
-          numAchieved: Number(apiRecentGame.NumAchieved),
-          scoreAchieved: Number(apiRecentGame.ScoreAchieved),
-        })
-      );
-
-      return recentlyPlayedGames;
+      return camelcaseKeys(sanitizeProps(responseBody));
     } catch (err) {
       console.error(
         `RetroAchievements API: There was a problem retrieving the recently played games for user ${userName}.`,
@@ -281,21 +247,7 @@ export class RetroAchievementsClient {
     const achievements: fromModels.Achievement[] = [];
 
     for (const [_, apiAchievement] of Object.entries(apiAchievements)) {
-      achievements.push({
-        id: Number(apiAchievement.ID),
-        numAwarded: Number(apiAchievement.NumAwarded),
-        numAwardedHardcore: Number(apiAchievement.NumAwardedHardcore),
-        title: apiAchievement.Title,
-        description: apiAchievement.Description,
-        points: Number(apiAchievement.Points),
-        trueRatio: Number(apiAchievement.TrueRatio),
-        author: apiAchievement.Author,
-        dateModified: new Date(apiAchievement.DateModified),
-        dateCreated: new Date(apiAchievement.DateCreated),
-        badgeName: Number(apiAchievement.BadgeName),
-        displayOrder: Number(apiAchievement.DisplayOrder),
-        memAddr: apiAchievement.MemAddr,
-      });
+      achievements.push(camelcaseKeys(sanitizeProps(apiAchievement)));
     }
 
     return achievements;
@@ -304,23 +256,6 @@ export class RetroAchievementsClient {
   private sanitizeApiGameInfo(
     apiGame: fromModels.ApiGameInfo | fromModels.ApiGameInfoExtended
   ) {
-    return {
-      gameTitle: apiGame.GameTitle,
-      consoleId: apiGame.ConsoleID ? Number(apiGame.ConsoleID) : null,
-      console: apiGame.Console,
-      forumTopicId: apiGame.ForumTopicID ? Number(apiGame.ForumTopicID) : null,
-      title: apiGame?.Title,
-      consoleName: apiGame?.ConsoleName,
-      flags: apiGame.Flags ? Number(apiGame.Flags) : null,
-      imageIcon: apiGame?.ImageIcon,
-      gameIcon: apiGame?.GameIcon,
-      imageTitle: apiGame?.ImageTitle,
-      imageIngame: apiGame?.ImageIngame,
-      imageBoxArt: apiGame?.ImageBoxArt,
-      publisher: apiGame?.Publisher,
-      developer: apiGame?.Developer,
-      genre: apiGame?.Genre,
-      released: apiGame.Released ? new Date(apiGame.Released) : undefined,
-    };
+    return camelcaseKeys(sanitizeProps(apiGame));
   }
 }
