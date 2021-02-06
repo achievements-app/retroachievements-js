@@ -12,4 +12,10 @@ export interface ApiAchievement {
   BadgeName: string;
   DisplayOrder: string;
   MemAddr: string;
+
+  GameID?: string;
+  GameTitle?: string;
+  IsAwarded?: string;
+  DateAwarded?: string;
+  HardcoreAchieved?: string;
 }

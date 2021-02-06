@@ -177,6 +177,93 @@ export class RetroAchievementsClient {
     }
   }
 
+  async getUserProgressForGames(
+    userName: string,
+    gameIds: number[]
+  ): Promise<fromModels.UserProgressForGame[] | void> {
+    const requestUrl = urlcat(this.baseUrl, 'API_GetUserProgress.php', {
+      ...this.buildAuthParameters(),
+      u: userName,
+      i: gameIds.join(', '),
+    });
+
+    try {
+      const httpResponse = await fetch(requestUrl);
+      const responseBody = (await httpResponse.json()) as {
+        [key: string]: fromModels.ApiUserProgressForGame;
+      };
+
+      const progressItems: fromModels.UserProgressForGame[] = [];
+
+      for (const [key, value] of Object.entries(responseBody)) {
+        // A key of 0 means the game couldn't be found in the RetroAchievements system.
+        if (key !== '0') {
+          progressItems.push({
+            gameId: Number(key),
+            numPossibleAchievements: Number(value.NumPossibleAchievements),
+            possibleScore: Number(value.PossibleScore),
+            numAchieved: value.NumAchieved,
+            scoreAchieved: value.ScoreAchieved,
+            numAchievedHardcore: value.NumAchievedHardcore,
+            scoreAchievedHardcore: value.ScoreAchievedHardcore,
+          });
+        }
+      }
+
+      return progressItems;
+    } catch (err) {
+      console.error(
+        'RetroAchievements API: There was a problem retrieving the progress for these games.',
+        err
+      );
+    }
+  }
+
+  async getUserRecentlyPlayedGames(
+    userName: string,
+    count?: number
+  ): Promise<fromModels.UserRecentlyPlayedGame[] | void> {
+    const requestUrl = urlcat(
+      this.baseUrl,
+      'API_GetUserRecentlyPlayedGames.php',
+      {
+        ...this.buildAuthParameters(),
+        u: userName,
+        c: count,
+      }
+    );
+
+    try {
+      const httpResponse = await fetch(requestUrl);
+      const responseBody = (await httpResponse.json()) as fromModels.ApiUserRecentlyPlayedGame[];
+
+      const recentlyPlayedGames: fromModels.UserRecentlyPlayedGame[] = responseBody.map(
+        apiRecentGame => ({
+          gameId: Number(apiRecentGame.GameID),
+          consoleId: Number(apiRecentGame.ConsoleID),
+          consoleName: apiRecentGame.ConsoleName,
+          title: apiRecentGame.Title,
+          imageIcon: apiRecentGame.ImageIcon,
+          lastPlayed: new Date(apiRecentGame.LastPlayed),
+          myVote: apiRecentGame.MyVote ? Number(apiRecentGame.MyVote) : null,
+          numPossibleAchievements: Number(
+            apiRecentGame.NumPossibleAchievements
+          ),
+          possibleScore: Number(apiRecentGame.PossibleScore),
+          numAchieved: Number(apiRecentGame.NumAchieved),
+          scoreAchieved: Number(apiRecentGame.ScoreAchieved),
+        })
+      );
+
+      return recentlyPlayedGames;
+    } catch (err) {
+      console.error(
+        `RetroAchievements API: There was a problem retrieving the recently played games for user ${userName}.`,
+        err
+      );
+    }
+  }
+
   private buildAuthParameters() {
     return {
       z: this.userName,
