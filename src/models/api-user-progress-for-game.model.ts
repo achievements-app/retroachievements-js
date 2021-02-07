@@ -1,8 +1,8 @@
 export interface ApiUserProgressForGame {
   NumPossibleAchievements: string;
   PossibleScore: string;
-  NumAchieved: number;
-  ScoreAchieved: number;
-  NumAchievedHardcore: number;
-  ScoreAchievedHardcore: number;
+  NumAchieved: number | string;
+  ScoreAchieved: number | string;
+  NumAchievedHardcore: number | string;
+  ScoreAchievedHardcore: number | string;
 }

@@ -24,7 +24,9 @@ export class RetroAchievementsClient {
       const httpResponse = await fetch(requestUrl);
       const responseBody = (await httpResponse.json()) as fromModels.ApiConsoleId[];
 
-      return camelcaseKeys(sanitizeProps(responseBody));
+      return camelcaseKeys(
+        sanitizeProps(responseBody)
+      ) as fromModels.ConsoleId[];
     } catch (err) {
       console.error(
         'RetroAchievements API: There was a problem retrieving the console IDs.',

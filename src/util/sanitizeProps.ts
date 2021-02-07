@@ -6,7 +6,11 @@ export const sanitizeProps = (obj: any) => {
   const modified = Array.isArray(obj) ? [...obj] : { ...obj };
 
   traverse(modified).forEach(function(val) {
-    if (typeof val === 'string' && val.match(/^[0-9]+$/)) {
+    if (
+      typeof val === 'string' &&
+      val.match(/^[0-9]+$/) &&
+      !this?.key?.toLowerCase()?.includes('title')
+    ) {
       this.update(Number(val));
     } else if (typeof val === 'string' && val.match(raDateFormat)) {
       this.update(new Date(val));
