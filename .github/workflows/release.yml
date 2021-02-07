@@ -21,7 +21,7 @@ jobs:
           node-version: 12
 
       - name: Install dependencies
-        run: bahmutov/npm-install@v1
+        uses: bahmutov/npm-install@v1
 
       - name: Release
         env:
