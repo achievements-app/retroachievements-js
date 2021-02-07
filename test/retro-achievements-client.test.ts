@@ -189,7 +189,7 @@ describe('RetroAchievementsClient', () => {
     });
   });
 
-  describe('getGameInfoExtendedByGameId', () => {
+  describe('getExtendedGameInfoByGameId', () => {
     it('given a game id, returns the extended game info', async () => {
       // ARRANGE
       const mockAchievementOne: fromModels.ApiAchievement = {
@@ -263,7 +263,7 @@ describe('RetroAchievementsClient', () => {
       server.listen();
 
       // ACT
-      const gameInfoExtended = await client.getGameInfoExtendedByGameId(504);
+      const gameInfoExtended = await client.getExtendedGameInfoByGameId(504);
 
       // ASSERT
       expect(gameInfoExtended).toBeDefined();
@@ -293,7 +293,7 @@ describe('RetroAchievementsClient', () => {
 
       // ASSERT
       expect(
-        async () => await client.getGameInfoExtendedByGameId(504)
+        async () => await client.getExtendedGameInfoByGameId(504)
       ).rejects.toThrow();
     });
   });

@@ -85,7 +85,7 @@ export class RetroAchievementsClient {
     }
   }
 
-  async getGameInfoExtendedByGameId(
+  async getExtendedGameInfoByGameId(
     gameId: number
   ): Promise<fromModels.GameInfoExtended> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetGameExtended.php', {
