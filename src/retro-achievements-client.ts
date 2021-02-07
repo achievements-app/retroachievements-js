@@ -232,6 +232,29 @@ export class RetroAchievementsClient {
     }
   }
 
+  async getUserGameCompletionStats(
+    userName: string
+  ): Promise<fromModels.UserGameCompletion[] | void> {
+    const requestUrl = urlcat(this.baseUrl, 'API_GetUserCompletedGames.php', {
+      ...this.buildAuthParameters(),
+      u: userName,
+    });
+
+    try {
+      const httpResponse = await fetch(requestUrl);
+      const responseBody = (await httpResponse.json()) as fromModels.ApiUserGameCompletion[];
+
+      return camelcaseKeys(
+        sanitizeProps(responseBody)
+      ) as fromModels.UserGameCompletion[];
+    } catch (err) {
+      console.error(
+        `RetroAchievements API: There was a problem retrieving the game completion stats for user ${userName}`,
+        err
+      );
+    }
+  }
+
   private buildAuthParameters() {
     return {
       z: this.userName,

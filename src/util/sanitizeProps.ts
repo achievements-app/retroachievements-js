@@ -8,7 +8,7 @@ export const sanitizeProps = (obj: any) => {
   traverse(modified).forEach(function(val) {
     if (
       typeof val === 'string' &&
-      val.match(/^[0-9]+$/) &&
+      val.match(/^-?(0|[1-9]\d*)(\.\d+)?$/) &&
       !this?.key?.toLowerCase()?.includes('title')
     ) {
       this.update(Number(val));

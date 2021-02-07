@@ -613,4 +613,73 @@ describe('RetroAchievementsClient', () => {
       ]);
     });
   });
+
+  describe('getUserGameCompletionStats', () => {
+    it('returns a list of stats for games played by a user', async () => {
+      // ARRANGE
+      const mockUserGameCompletions: fromModels.ApiUserGameCompletion[] = [
+        {
+          GameID: '1465',
+          ConsoleName: 'NES',
+          ImageIcon: '/Images/024531.png',
+          Title: 'Donkey Kong Jr.',
+          NumAwarded: '13',
+          MaxPossible: '13',
+          PctWon: '1.0000',
+          HardcoreMode: '0',
+        },
+        {
+          GameID: '1446',
+          ConsoleName: 'NES',
+          ImageIcon: '/Images/036035.png',
+          Title: 'Super Mario Bros.',
+          NumAwarded: '72',
+          MaxPossible: '78',
+          PctWon: '0.9231',
+          HardcoreMode: '0',
+        },
+      ];
+
+      server = setupServer(
+        rest.get(
+          'https://retroachievements.org/API/API_GetUserCompletedGames.php',
+          (_, res, ctx) => {
+            return res(ctx.json(mockUserGameCompletions));
+          }
+        )
+      );
+
+      server.listen();
+
+      // ACT
+      const userGameCompletions = await client.getUserGameCompletionStats(
+        'WCopeland'
+      );
+
+      // ASSERT
+      expect(userGameCompletions).toHaveLength(2);
+      expect(userGameCompletions).toEqual([
+        {
+          consoleName: 'NES',
+          gameId: 1465,
+          hardcoreMode: 0,
+          imageIcon: '/Images/024531.png',
+          maxPossible: 13,
+          numAwarded: 13,
+          pctWon: 1,
+          title: 'Donkey Kong Jr.',
+        },
+        {
+          consoleName: 'NES',
+          gameId: 1446,
+          hardcoreMode: 0,
+          imageIcon: '/Images/036035.png',
+          maxPossible: 78,
+          numAwarded: 72,
+          pctWon: 0.9231,
+          title: 'Super Mario Bros.',
+        },
+      ]);
+    });
+  });
 });
