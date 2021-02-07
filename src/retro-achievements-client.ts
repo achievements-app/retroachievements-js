@@ -21,8 +21,9 @@ export class RetroAchievementsClient {
     });
 
     try {
-      const httpResponse = await fetch(requestUrl);
-      const responseBody = (await httpResponse.json()) as fromModels.ApiConsoleId[];
+      const responseBody = await this.loadResponseBody<
+        fromModels.ApiConsoleId[]
+      >(requestUrl);
 
       return camelcaseKeys(
         sanitizeProps(responseBody)
@@ -43,8 +44,9 @@ export class RetroAchievementsClient {
     });
 
     try {
-      const httpResponse = await fetch(requestUrl);
-      const responseBody = (await httpResponse.json()) as fromModels.ApiUserRankAndScore;
+      const responseBody = await this.loadResponseBody<
+        fromModels.ApiUserRankAndScore
+      >(requestUrl);
 
       if (responseBody.Score === null) {
         throw new Error(
@@ -67,8 +69,9 @@ export class RetroAchievementsClient {
     });
 
     try {
-      const httpResponse = await fetch(requestUrl);
-      const responseBody = (await httpResponse.json()) as fromModels.ApiGameInfo;
+      const responseBody = await this.loadResponseBody<fromModels.ApiGameInfo>(
+        requestUrl
+      );
 
       if (responseBody.GameTitle === 'UNRECOGNISED') {
         throw 'Game not found';
@@ -91,8 +94,9 @@ export class RetroAchievementsClient {
     });
 
     try {
-      const httpResponse = await fetch(requestUrl);
-      const responseBody = (await httpResponse.json()) as fromModels.ApiGameInfoExtended;
+      const responseBody = await this.loadResponseBody<
+        fromModels.ApiGameInfoExtended
+      >(requestUrl);
 
       if (responseBody.ID === undefined) {
         throw 'Game not found';
@@ -130,8 +134,9 @@ export class RetroAchievementsClient {
     });
 
     try {
-      const httpResponse = await fetch(requestUrl);
-      const responseBody = (await httpResponse.json()) as fromModels.ApiGameListEntity[];
+      const responseBody = await this.loadResponseBody<
+        fromModels.ApiGameListEntity[]
+      >(requestUrl);
 
       return camelcaseKeys(sanitizeProps(responseBody));
     } catch (err) {
@@ -147,8 +152,9 @@ export class RetroAchievementsClient {
     });
 
     try {
-      const httpResponse = await fetch(requestUrl);
-      const responseBody = (await httpResponse.json()) as fromModels.ApiTopTenUser[];
+      const responseBody = await this.loadResponseBody<
+        fromModels.ApiTopTenUser[]
+      >(requestUrl);
 
       return responseBody.map(apiUser => ({
         userName: apiUser['1'],
@@ -173,10 +179,9 @@ export class RetroAchievementsClient {
     });
 
     try {
-      const httpResponse = await fetch(requestUrl);
-      const responseBody = (await httpResponse.json()) as {
+      const responseBody = await this.loadResponseBody<{
         [key: string]: fromModels.ApiUserProgressForGame;
-      };
+      }>(requestUrl);
 
       const progressItems: fromModels.UserProgressForGame[] = [];
 
@@ -215,8 +220,9 @@ export class RetroAchievementsClient {
     );
 
     try {
-      const httpResponse = await fetch(requestUrl);
-      const responseBody = (await httpResponse.json()) as fromModels.ApiUserRecentlyPlayedGame[];
+      const responseBody = await this.loadResponseBody<
+        fromModels.ApiUserRecentlyPlayedGame[]
+      >(requestUrl);
 
       return camelcaseKeys(sanitizeProps(responseBody));
     } catch (err) {
@@ -235,8 +241,9 @@ export class RetroAchievementsClient {
     });
 
     try {
-      const httpResponse = await fetch(requestUrl);
-      const responseBody = (await httpResponse.json()) as fromModels.ApiUserGameCompletion[];
+      const responseBody = await this.loadResponseBody<
+        fromModels.ApiUserGameCompletion[]
+      >(requestUrl);
 
       return camelcaseKeys(
         sanitizeProps(responseBody)
@@ -263,8 +270,9 @@ export class RetroAchievementsClient {
     );
 
     try {
-      const httpResponse = await fetch(requestUrl);
-      const responseBody = (await httpResponse.json()) as fromModels.ApiDatedAchievement[];
+      const responseBody = await this.loadResponseBody<
+        fromModels.ApiDatedAchievement[]
+      >(requestUrl);
 
       return camelcaseKeys(
         sanitizeProps(responseBody)
@@ -291,8 +299,9 @@ export class RetroAchievementsClient {
     );
 
     try {
-      const httpResponse = await fetch(requestUrl);
-      const responseBody = (await httpResponse.json()) as fromModels.ApiGameInfoAndUserProgress;
+      const responseBody = await this.loadResponseBody<
+        fromModels.ApiGameInfoAndUserProgress
+      >(requestUrl);
 
       const sanitizedAchievements = this.sanitizeAchievements(
         responseBody.Achievements
@@ -336,8 +345,9 @@ export class RetroAchievementsClient {
     });
 
     try {
-      const httpResponse = await fetch(requestUrl);
-      const responseBody = (await httpResponse.json()) as fromModels.ApiUserSummary;
+      const responseBody = await this.loadResponseBody<
+        fromModels.ApiUserSummary
+      >(requestUrl);
 
       const sanitizedRecentlyPlayed = camelcaseKeys(
         sanitizeProps(responseBody.RecentlyPlayed)
@@ -377,6 +387,13 @@ export class RetroAchievementsClient {
       z: this.userName,
       y: this.apiKey,
     };
+  }
+
+  private async loadResponseBody<T>(requestUrl: string): Promise<T> {
+    const httpResponse = await fetch(requestUrl);
+    const responseBody = (await httpResponse.json()) as T;
+
+    return responseBody;
   }
 
   private sanitizeAchievements(
