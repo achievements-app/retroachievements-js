@@ -22,7 +22,8 @@
   "peerDependencies": {},
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint"
+      "pre-commit": "tsdx lint",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "prettier": {
@@ -41,8 +42,11 @@
     }
   ],
   "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@size-limit/preset-small-lib": "^4.9.2",
     "@types/traverse": "^0.6.32",
+    "cz-conventional-changelog": "3.3.0",
     "husky": "^4.3.8",
     "msw": "^0.26.0",
     "size-limit": "^4.9.2",
@@ -55,5 +59,10 @@
     "cross-fetch": "^3.0.6",
     "traverse": "^0.6.6",
     "urlcat": "^2.0.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

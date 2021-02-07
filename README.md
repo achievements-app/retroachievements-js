@@ -77,7 +77,7 @@ const client = new RetroAchievementsClient({
 });
 ```
 
-Please note **if you are using this library in the browser then your API key will be exposed.** This is not destructive, as the API is read-only, but this could change at any time. For this reason, I recommend only using this library on the server where your API key can be kept a secret.
+Please note **if you are using this library in the browser then your API key will be exposed.** This is not destructive, as the API is read-only, but that could change at any time. For this reason, I recommend only using the library on the server where your API key can be kept a secret.
 
 ## API Reference
 
