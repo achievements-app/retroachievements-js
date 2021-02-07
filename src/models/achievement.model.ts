@@ -12,4 +12,9 @@ export interface Achievement {
   badgeName: number;
   displayOrder: number;
   memAddr: string;
+  gameId?: number;
+  gameTitle?: string;
+  isAwarded?: number;
+  dateAwarded?: Date;
+  hardcoreAchieved?: number;
 }

@@ -31,7 +31,7 @@ export interface ApiUserSummary {
   Rank: string;
   Awarded: {
     [gameId: string]: ApiUserProgressForGame;
-  }[];
+  };
   RecentAchievements: {
     [gameId: string]: {
       [achievementId: string]: ApiAchievement;

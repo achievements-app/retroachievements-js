@@ -1,23 +1,23 @@
 export interface ApiAchievement {
   ID: string;
-  NumAwarded: string;
-  NumAwardedHardcore: string;
-  Title: string;
+  BadgeName: string;
   Description: string;
   Points: string;
-  TrueRatio: string;
-  Author: string;
-  DateModified: string;
-  DateCreated: string;
-  BadgeName: string;
-  DisplayOrder: string;
-  MemAddr: string;
+  Title: string;
 
+  Author?: string;
+  DateAwarded?: string;
+  DateCreated?: string;
+  DateEarned?: string;
+  DateEarnedHardcore?: string;
+  DateModified?: string;
+  DisplayOrder?: string;
   GameID?: string;
   GameTitle?: string;
-  IsAwarded?: string;
-  DateAwarded?: string;
-  DateEarned?: string;
   HardcoreAchieved?: string;
-  DateEarnedHardcore?: string;
+  IsAwarded?: string;
+  MemAddr?: string;
+  NumAwarded?: string;
+  NumAwardedHardcore?: string;
+  TrueRatio?: string;
 }

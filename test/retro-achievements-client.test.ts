@@ -889,4 +889,191 @@ describe('RetroAchievementsClient', () => {
       });
     });
   });
+
+  describe('getUserSummary', () => {
+    it('returns a summary for the given username', async () => {
+      // ARRANGE
+      const mockUserSummary: fromModels.ApiUserSummary = {
+        RecentlyPlayedCount: 29,
+        RecentlyPlayed: [
+          {
+            GameID: '1448',
+            ConsoleID: '7',
+            ConsoleName: 'NES',
+            Title: 'Mega Man',
+            ImageIcon: '/Images/024519.png',
+            LastPlayed: '2020-11-09 22:30:26',
+            MyVote: null,
+          },
+          {
+            GameID: '1449',
+            ConsoleID: '7',
+            ConsoleName: 'NES',
+            Title: 'Final Fantasy',
+            ImageIcon: '/Images/024314.png',
+            LastPlayed: '2020-11-03 03:08:42',
+            MyVote: null,
+          },
+        ],
+        MemberSince: '2020-02-02 20:10:35',
+        LastActivity: {
+          ID: '26455336',
+          timestamp: '2021-01-31 18:57:01',
+          lastupdate: '2021-01-31 18:57:01',
+          activitytype: '2',
+          User: 'WCopeland',
+          data: null,
+          data2: null,
+        },
+        RichPresenceMsg: 'Wily 1|🚶1|💯609500',
+        LastGameID: '1448',
+        LastGame: {
+          ID: 1448,
+          Title: 'Mega Man',
+          ConsoleID: 7,
+          ForumTopicID: 363,
+          Flags: 0,
+          ImageIcon: '/Images/024519.png',
+          ImageTitle: '/Images/000445.png',
+          ImageIngame: '/Images/034071.png',
+          ImageBoxArt: '/Images/012788.png',
+          Publisher: 'Capcom',
+          Developer: 'Capcom',
+          Genre: 'Platformer (Side Scrolling)',
+          Released: 'December 17, 1987',
+          IsFinal: false,
+          ConsoleName: 'NES',
+          RichPresencePatch:
+            'Lookup:Stage\r\n0x00=Cutman\r\n0x01=Iceman\r\n0x02=Bombman\r\n0x03=Fireman\r\n0x04=Elecman\r\n0x05=Gutsman\r\n0x06=Wily 1\r\n0x07=Wily 2\r\n0x08=Wily 3\r\n0x09=Wily 4\r\n0x0a=Title Screen\r\n0x0b=The End\r\n\r\nFormat:Lives\r\nFormatType=VALUE\r\n\r\nFormat:Score\r\nFormatType=VALUE\r\n\r\nDisplay:\r\n?0xh0031=10?Rocking it on the title screen\r\n@Stage(0xh0031)|🚶@Lives(0xh00a6)|💯@Score(0xh0072*1_0xh0073*10_0xh0074*100_0xh0075*1000_0xh0076*10000_0xh0077*100000_0xh0078*1000000)',
+        },
+        ContribCount: '0',
+        ContribYield: '0',
+        TotalPoints: '6756',
+        TotalTruePoints: '31058',
+        Permissions: '1',
+        Untracked: '0',
+        ID: '117089',
+        UserWallActive: '1',
+        Motto: '',
+        Rank: '4674',
+        Awarded: {
+          '1448': {
+            NumPossibleAchievements: '50',
+            PossibleScore: '490',
+            NumAchieved: '17',
+            ScoreAchieved: '115',
+            NumAchievedHardcore: '17',
+            ScoreAchievedHardcore: '115',
+          },
+          '1449': {
+            NumPossibleAchievements: '26',
+            PossibleScore: '336',
+            NumAchieved: '1',
+            ScoreAchieved: '1',
+            NumAchievedHardcore: '1',
+            ScoreAchievedHardcore: '1',
+          },
+        },
+        RecentAchievements: {
+          '1448': {
+            '3404': {
+              ID: '3404',
+              GameID: '1448',
+              GameTitle: 'Mega Man',
+              Title: 'Bombman',
+              Description: 'Defeat Bombman and get his Power!',
+              Points: '5',
+              BadgeName: '73833',
+              IsAwarded: '1',
+              DateAwarded: '2020-11-09 23:08:08',
+              HardcoreAchieved: '0',
+            },
+            '3472': {
+              ID: '3472',
+              GameID: '1448',
+              GameTitle: 'Mega Man',
+              Title: 'Blue Bomber',
+              Description:
+                'Defeat Bombman without taking damage (pause glitch not allowed)',
+              Points: '10',
+              BadgeName: '73852',
+              IsAwarded: '1',
+              DateAwarded: '2020-11-09 23:07:59',
+              HardcoreAchieved: '0',
+            },
+          },
+        },
+        Points: '6756',
+        UserPic: '/UserPic/WCopeland.png',
+        TotalRanked: '89202',
+        Status: 'Offline',
+      };
+
+      server = setupServer(
+        rest.get(
+          'https://retroachievements.org/API/API_GetUserSummary.php',
+          (_, res, ctx) => {
+            return res(ctx.json(mockUserSummary));
+          }
+        )
+      );
+
+      server.listen();
+
+      // ACT
+      const userSummary = (await client.getUserSummary(
+        'WCopeland'
+      )) as fromModels.UserSummary;
+
+      // ASSERT
+      expect(userSummary.awarded).toEqual([
+        {
+          gameId: 1448,
+          numPossibleAchievements: 50,
+          possibleScore: 490,
+          numAchieved: 17,
+          scoreAchieved: 115,
+          numAchievedHardcore: 17,
+          scoreAchievedHardcore: 115,
+        },
+        {
+          gameId: 1449,
+          numPossibleAchievements: 26,
+          possibleScore: 336,
+          numAchieved: 1,
+          scoreAchieved: 1,
+          numAchievedHardcore: 1,
+          scoreAchievedHardcore: 1,
+        },
+      ]);
+
+      expect(userSummary.recentAchievements).toEqual([
+        {
+          id: 3404,
+          gameId: 1448,
+          gameTitle: 'Mega Man',
+          title: 'Bombman',
+          description: 'Defeat Bombman and get his Power!',
+          points: 5,
+          badgeName: 73833,
+          isAwarded: 1,
+          dateAwarded: new Date('2020-11-09 23:08:08'),
+          hardcoreAchieved: 0,
+        },
+        {
+          id: 3472,
+          gameId: 1448,
+          gameTitle: 'Mega Man',
+          title: 'Blue Bomber',
+          description:
+            'Defeat Bombman without taking damage (pause glitch not allowed)',
+          points: 10,
+          badgeName: 73852,
+          isAwarded: 1,
+          dateAwarded: new Date('2020-11-09 23:07:59'),
+          hardcoreAchieved: 0,
+        },
+      ]);
+    });
+  });
 });

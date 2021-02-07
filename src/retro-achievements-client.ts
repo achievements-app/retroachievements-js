@@ -332,6 +332,53 @@ export class RetroAchievementsClient {
     }
   }
 
+  async getUserSummary(
+    userName: string,
+    numberOfRecentGames?: number
+  ): Promise<fromModels.UserSummary | void> {
+    const requestUrl = urlcat(this.baseUrl, 'API_GetUserSummary.php', {
+      ...this.buildAuthParameters(),
+      u: userName,
+      g: numberOfRecentGames,
+    });
+
+    try {
+      const httpResponse = await fetch(requestUrl);
+      const responseBody = (await httpResponse.json()) as fromModels.ApiUserSummary;
+
+      const sanitizedRecentlyPlayed = camelcaseKeys(
+        sanitizeProps(responseBody.RecentlyPlayed)
+      );
+
+      const sanitizedAwarded = this.sanitizeAwarded(responseBody.Awarded);
+
+      const sanitizedRecentAchievements = this.sanitizeRecentAchievements(
+        responseBody.RecentAchievements
+      );
+
+      const modifiedResponse: Partial<fromModels.ApiUserSummary> = {
+        ...responseBody,
+      };
+
+      delete modifiedResponse.RecentlyPlayed;
+      delete modifiedResponse.Awarded;
+      delete modifiedResponse.RecentAchievements;
+
+      const sanitizedResponse = {
+        ...camelcaseKeys(sanitizeProps(modifiedResponse)),
+        recentlyPlayed: sanitizedRecentlyPlayed,
+        recentAchievements: sanitizedRecentAchievements,
+        awarded: sanitizedAwarded,
+      };
+
+      return sanitizedResponse;
+    } catch (err) {
+      console.error(
+        `RetroAchievements API: There was a problem retrieving the user summary for user ${userName}.`
+      );
+    }
+  }
+
   private buildAuthParameters() {
     return {
       z: this.userName,
@@ -355,9 +402,42 @@ export class RetroAchievementsClient {
     return achievements;
   }
 
+  private sanitizeAwarded(apiAwardedList: {
+    [gameId: string]: fromModels.ApiUserProgressForGame;
+  }) {
+    const awarded: fromModels.UserProgressForGame[] = [];
+
+    for (const [gameId, apiAwarded] of Object.entries(apiAwardedList)) {
+      awarded.push({
+        gameId: Number(gameId),
+        ...camelcaseKeys(sanitizeProps(apiAwarded)),
+      });
+    }
+
+    return awarded;
+  }
+
   private sanitizeApiGameInfo(
     apiGame: fromModels.ApiGameInfo | fromModels.ApiGameInfoExtended
   ) {
     return camelcaseKeys(sanitizeProps(apiGame));
+  }
+
+  private sanitizeRecentAchievements(apiRecentAchievements: {
+    [gameId: string]: {
+      [achievementId: string]: fromModels.ApiAchievement;
+    };
+  }) {
+    const recentAchievements: fromModels.Achievement[] = [];
+
+    for (const [_, apiGameAchievements] of Object.entries(
+      apiRecentAchievements
+    )) {
+      for (const [_, apiAchievement] of Object.entries(apiGameAchievements)) {
+        recentAchievements.push(camelcaseKeys(sanitizeProps(apiAchievement)));
+      }
+    }
+
+    return recentAchievements;
   }
 }
