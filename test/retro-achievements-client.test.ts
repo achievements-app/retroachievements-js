@@ -780,4 +780,113 @@ describe('RetroAchievementsClient', () => {
       ]);
     });
   });
+
+  describe('getUserProgressForGameId', () => {
+    it("returns all of a given user's progress for a given game id", async () => {
+      // ARRANGE
+      const mockUserProgressForGameId: fromModels.ApiGameInfoAndUserProgress = {
+        ID: 1448,
+        Title: 'Mega Man',
+        ConsoleID: 7,
+        ForumTopicID: 363,
+        Flags: 0,
+        ImageIcon: '/Images/024519.png',
+        ImageTitle: '/Images/000445.png',
+        ImageIngame: '/Images/034071.png',
+        ImageBoxArt: '/Images/012788.png',
+        Publisher: 'Capcom',
+        Developer: 'Capcom',
+        Genre: 'Platformer (Side Scrolling)',
+        Released: 'December 17, 1987',
+        IsFinal: false,
+        ConsoleName: 'NES',
+        RichPresencePatch: '1639c64070f4a10c1006ab6bda70d766',
+        NumAchievements: 50,
+        NumDistinctPlayersCasual: '3213',
+        NumDistinctPlayersHardcore: '2067',
+        Achievements: {
+          '54059': {
+            ID: '54059',
+            NumAwarded: '264',
+            NumAwardedHardcore: '198',
+            Title: 'Mega Meow One',
+            Description: 'Have 9 lives',
+            Points: '10',
+            TrueRatio: '53',
+            Author: 'Salsa',
+            DateModified: '2019-10-17 20:09:01',
+            DateCreated: '2017-10-29 19:02:40',
+            BadgeName: '73832',
+            DisplayOrder: '0',
+            MemAddr: '92346871ff9c98cac45c0f42b911aedd',
+          },
+        },
+        NumAwardedToUser: 17,
+        NumAwardedToUserHardcore: 17,
+        UserCompletion: '34.00%',
+        UserCompletionHardcore: '34.00%',
+      };
+
+      server = setupServer(
+        rest.get(
+          'https://retroachievements.org/API/API_GetGameInfoAndUserProgress.php',
+          (_, res, ctx) => {
+            return res(ctx.json(mockUserProgressForGameId));
+          }
+        )
+      );
+
+      server.listen();
+
+      // ACT
+      const userProgressForGameId = await client.getUserProgressForGameId(
+        'WCopeland',
+        1448
+      );
+
+      // ASSERT
+      expect(userProgressForGameId).toEqual({
+        id: 1448,
+        title: 'Mega Man',
+        consoleId: 7,
+        forumTopicId: 363,
+        flags: 0,
+        imageIcon: '/Images/024519.png',
+        imageTitle: '/Images/000445.png',
+        imageIngame: '/Images/034071.png',
+        imageBoxArt: '/Images/012788.png',
+        publisher: 'Capcom',
+        developer: 'Capcom',
+        genre: 'Platformer (Side Scrolling)',
+        released: 'December 17, 1987',
+        isFinal: false,
+        consoleName: 'NES',
+        richPresencePatch: '1639c64070f4a10c1006ab6bda70d766',
+        numAchievements: 50,
+        numDistinctPlayersCasual: 3213,
+        numDistinctPlayersHardcore: 2067,
+        numAwardedToUser: 17,
+        numAwardedToUserHardcore: 17,
+        userCompletion: 34,
+        userCompletionHardcore: 34,
+        achievements: [
+          {
+            id: 54059,
+            numAwarded: 264,
+            numAwardedHardcore: 198,
+            title: 'Mega Meow One',
+            description: 'Have 9 lives',
+            points: 10,
+            trueRatio: 53,
+            author: 'Salsa',
+            dateModified: new Date('2019-10-17 20:09:01'),
+            dateCreated: new Date('2017-10-29 19:02:40'),
+            badgeName: 73832,
+            displayOrder: 0,
+            memAddr: '92346871ff9c98cac45c0f42b911aedd',
+          },
+        ],
+      });
+    });
+  });
 });

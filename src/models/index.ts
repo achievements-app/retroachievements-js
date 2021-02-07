@@ -1,6 +1,7 @@
 export * from './api-achievement.model';
 export * from './api-console-id.model';
 export * from './api-dated-achievement.model';
+export * from './api-game-info-and-user-progress.model';
 export * from './api-game-info.model';
 export * from './api-game-info-extended.model';
 export * from './api-game-list-entity.model';
@@ -14,6 +15,7 @@ export * from './api-user-summary.model';
 export * from './achievement.model';
 export * from './console-id.model';
 export * from './dated-achievement.model';
+export * from './game-info-and-user-progress.model';
 export * from './game-info.model';
 export * from './game-info-extended.model';
 export * from './game-list-entity.model';

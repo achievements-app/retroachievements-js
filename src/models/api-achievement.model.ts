@@ -17,5 +17,7 @@ export interface ApiAchievement {
   GameTitle?: string;
   IsAwarded?: string;
   DateAwarded?: string;
+  DateEarned?: string;
   HardcoreAchieved?: string;
+  DateEarnedHardcore?: string;
 }

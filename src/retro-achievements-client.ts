@@ -278,7 +278,56 @@ export class RetroAchievementsClient {
       ) as fromModels.DatedAchievement[];
     } catch (err) {
       console.error(
-        `RetroAchievements API: There was a probelm retrieving achievements for user ${userName}.`
+        `RetroAchievements API: There was a problem retrieving achievements for user ${userName}.`
+      );
+    }
+  }
+
+  async getUserProgressForGameId(
+    userName: string,
+    gameId: number
+  ): Promise<fromModels.GameInfoAndUserProgress | void> {
+    const requestUrl = urlcat(
+      this.baseUrl,
+      'API_GetGameInfoAndUserProgress.php',
+      {
+        ...this.buildAuthParameters(),
+        u: userName,
+        g: gameId,
+      }
+    );
+
+    try {
+      const httpResponse = await fetch(requestUrl);
+      const responseBody = (await httpResponse.json()) as fromModels.ApiGameInfoAndUserProgress;
+
+      const sanitizedAchievements = this.sanitizeAchievements(
+        responseBody.Achievements
+      );
+
+      const modifiedResponse: Partial<fromModels.ApiGameInfoAndUserProgress> = {
+        ...responseBody,
+      };
+
+      delete modifiedResponse.Achievements;
+
+      modifiedResponse.UserCompletion = modifiedResponse.UserCompletion?.replace(
+        '%',
+        ''
+      );
+
+      modifiedResponse.UserCompletionHardcore = modifiedResponse.UserCompletionHardcore?.replace(
+        '%',
+        ''
+      );
+
+      const sanitizedResponse = camelcaseKeys(sanitizeProps(modifiedResponse));
+      sanitizedResponse.achievements = sanitizedAchievements;
+
+      return sanitizedResponse;
+    } catch (err) {
+      console.error(
+        `RetroAchievements API: There was a problem retrieving game progress for user ${userName} on game id ${gameId}.`
       );
     }
   }
