@@ -13,10 +13,6 @@
     <img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="Semantic Release">
   </a>
 
-  <a href="http://commitizen.github.io/cz-cli/">
-    <img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg" alt="Commitizen Friendly">
-  </a>
-
   <a href="https://bundlephobia.com/result?p=retroachievements-js">
     <img src="https://badgen.net/bundlephobia/minzip/retroachievements-js" alt="minzipped size">
   </a>
