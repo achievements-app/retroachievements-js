@@ -1,5 +1,5 @@
 import urlcat from 'urlcat';
-import fetch from 'cross-fetch';
+import fetch from 'isomorphic-unfetch';
 import camelcaseKeys from 'camelcase-keys';
 
 import * as fromModels from './models';
