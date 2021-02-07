@@ -84,9 +84,7 @@ describe('RetroAchievementsClient', () => {
       server.listen();
 
       // ACT
-      const userRankAndScore = (await client.getUserRankAndScore(
-        'MockUser'
-      )) as fromModels.UserRankAndScore;
+      const userRankAndScore = await client.getUserRankAndScore('MockUser');
 
       // ASSERT
       expect(userRankAndScore).toBeDefined();
@@ -95,10 +93,8 @@ describe('RetroAchievementsClient', () => {
       expect(userRankAndScore.totalRanked).toEqual(88613);
     });
 
-    it('returns null if the requested user is not found', async () => {
+    it('throws an error if the requested user is not found', async () => {
       // ARRANGE
-      const consoleErrorSpy = spyOn(console, 'error');
-
       const mockUserRankAndScore: fromModels.ApiUserRankAndScore = {
         Score: null,
         Rank: '1',
@@ -116,14 +112,10 @@ describe('RetroAchievementsClient', () => {
 
       server.listen();
 
-      // ACT
-      const userRankAndScore = (await client.getUserRankAndScore(
-        'MockUser'
-      )) as fromModels.UserRankAndScore;
-
       // ASSERT
-      expect(userRankAndScore).toBeUndefined();
-      expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+      expect(
+        async () => await client.getUserRankAndScore('MockUser')
+      ).rejects.toThrowError();
     });
   });
 
@@ -161,9 +153,7 @@ describe('RetroAchievementsClient', () => {
       server.listen();
 
       // ACT
-      const gameInfo = (await client.getGameInfoByGameId(
-        504
-      )) as fromModels.GameInfo;
+      const gameInfo = await client.getGameInfoByGameId(504);
 
       // ASSERT
       expect(gameInfo).toBeDefined();
@@ -174,8 +164,6 @@ describe('RetroAchievementsClient', () => {
 
     it('throws an error and has no return if the game is not found', async () => {
       // ARRANGE
-      const consoleErrorSpy = spyOn(console, 'error');
-
       const mockGameInfo: fromModels.ApiGameInfo = {
         GameTitle: 'UNRECOGNISED',
         ConsoleID: null,
@@ -194,14 +182,10 @@ describe('RetroAchievementsClient', () => {
 
       server.listen();
 
-      // ACT
-      const gameInfo = (await client.getGameInfoByGameId(
-        504
-      )) as fromModels.GameInfo;
-
       // ASSERT
-      expect(gameInfo).not.toBeDefined();
-      expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+      expect(
+        async () => await client.getGameInfoByGameId(504)
+      ).rejects.toThrow();
     });
   });
 
@@ -279,9 +263,7 @@ describe('RetroAchievementsClient', () => {
       server.listen();
 
       // ACT
-      const gameInfoExtended = (await client.getGameInfoExtendedByGameId(
-        504
-      )) as fromModels.GameInfoExtended;
+      const gameInfoExtended = await client.getGameInfoExtendedByGameId(504);
 
       // ASSERT
       expect(gameInfoExtended).toBeDefined();
@@ -293,8 +275,6 @@ describe('RetroAchievementsClient', () => {
 
     it('throws an error and has no return if the game is not found', async () => {
       // ARRANGE
-      const consoleErrorSpy = spyOn(console, 'error');
-
       const mockGameInfoExtended: fromModels.ApiGameInfoExtended = {
         Achievements: [],
         RichPresencePatch: 'd41d8cd98f00b204e9800998ecf8427e',
@@ -311,14 +291,10 @@ describe('RetroAchievementsClient', () => {
 
       server.listen();
 
-      // ACT
-      const gameInfoExtended = (await client.getGameInfoExtendedByGameId(
-        504
-      )) as fromModels.GameInfoExtended;
-
       // ASSERT
-      expect(gameInfoExtended).not.toBeDefined();
-      expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+      expect(
+        async () => await client.getGameInfoExtendedByGameId(504)
+      ).rejects.toThrow();
     });
   });
 
@@ -445,7 +421,7 @@ describe('RetroAchievementsClient', () => {
       server.listen();
 
       // ACT
-      const topTen = (await client.getTopTenUsers()) as fromModels.TopTenUser[];
+      const topTen = await client.getTopTenUsers();
 
       // ASSERT
       expect(topTen).toHaveLength(10);
@@ -501,11 +477,11 @@ describe('RetroAchievementsClient', () => {
       server.listen();
 
       // ACT
-      const userProgress = (await client.getUserProgressForGames('WCopeland', [
+      const userProgress = await client.getUserProgressForGames('WCopeland', [
         1,
         1172,
         1448,
-      ])) as fromModels.UserProgressForGame[];
+      ]);
 
       // ASSERT
       expect(userProgress).toHaveLength(3);
@@ -1021,9 +997,7 @@ describe('RetroAchievementsClient', () => {
       server.listen();
 
       // ACT
-      const userSummary = (await client.getUserSummary(
-        'WCopeland'
-      )) as fromModels.UserSummary;
+      const userSummary = await client.getUserSummary('WCopeland');
 
       // ASSERT
       expect(userSummary.awarded).toEqual([

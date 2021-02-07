@@ -15,7 +15,7 @@ export class RetroAchievementsClient {
     this.userName = options.userName;
   }
 
-  async getConsoleIds(): Promise<fromModels.ConsoleId[] | void> {
+  async getConsoleIds(): Promise<fromModels.ConsoleId[]> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetConsoleIDs.php', {
       ...this.buildAuthParameters(),
     });
@@ -28,16 +28,15 @@ export class RetroAchievementsClient {
         sanitizeProps(responseBody)
       ) as fromModels.ConsoleId[];
     } catch (err) {
-      console.error(
-        'RetroAchievements API: There was a problem retrieving the console IDs.',
-        err
+      throw new Error(
+        `RetroAchievements API: There was a problem retrieving the console IDs. ${err}`
       );
     }
   }
 
   async getUserRankAndScore(
     userName: string
-  ): Promise<fromModels.UserRankAndScore | null | void> {
+  ): Promise<fromModels.UserRankAndScore> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetUserRankAndScore.php', {
       ...this.buildAuthParameters(),
       u: userName,
@@ -48,21 +47,20 @@ export class RetroAchievementsClient {
       const responseBody = (await httpResponse.json()) as fromModels.ApiUserRankAndScore;
 
       if (responseBody.Score === null) {
-        throw 'User not found';
+        throw new Error(
+          `RetroAchievements API: User ${userName} was not found.`
+        );
       }
 
       return camelcaseKeys(sanitizeProps(responseBody));
     } catch (err) {
-      console.error(
-        `RetroAchievements API: There was a problem retrieving the rank and score for user ${userName}.`,
-        err
+      throw new Error(
+        `RetroAchievements API: There was a problem retrieving the rank and score for user ${userName}. ${err}`
       );
     }
   }
 
-  async getGameInfoByGameId(
-    gameId: number
-  ): Promise<fromModels.GameInfo | void> {
+  async getGameInfoByGameId(gameId: number): Promise<fromModels.GameInfo> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetGame.php', {
       ...this.buildAuthParameters(),
       i: gameId,
@@ -78,16 +76,15 @@ export class RetroAchievementsClient {
 
       return this.sanitizeApiGameInfo(responseBody) as fromModels.GameInfo;
     } catch (err) {
-      console.error(
-        `RetroAchievements API: There was a problem retrieving the game info for ID ${gameId}`,
-        err
+      throw new Error(
+        `RetroAchievements API: There was a problem retrieving the game info for ID ${gameId}. ${err}`
       );
     }
   }
 
   async getGameInfoExtendedByGameId(
     gameId: number
-  ): Promise<fromModels.GameInfoExtended | void> {
+  ): Promise<fromModels.GameInfoExtended> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetGameExtended.php', {
       ...this.buildAuthParameters(),
       i: gameId,
@@ -118,16 +115,15 @@ export class RetroAchievementsClient {
           : undefined,
       };
     } catch (err) {
-      console.error(
-        `RetroAchievements API: There was a problem retrieving the extended game info for ID ${gameId}`,
-        err
+      throw new Error(
+        `RetroAchievements API: There was a problem retrieving the extended game info for ID ${gameId}. ${err}`
       );
     }
   }
 
   async getGameListByConsoleId(
     consoleId: number
-  ): Promise<fromModels.GameListEntity[] | void> {
+  ): Promise<fromModels.GameListEntity[]> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetGameList.php', {
       ...this.buildAuthParameters(),
       i: consoleId,
@@ -139,14 +135,13 @@ export class RetroAchievementsClient {
 
       return camelcaseKeys(sanitizeProps(responseBody));
     } catch (err) {
-      console.error(
-        'RetroAchievements API: There was a problem retrieving the console game list.',
-        err
+      throw new Error(
+        `RetroAchievements API: There was a problem retrieving the game list for console ID ${consoleId}. ${err}`
       );
     }
   }
 
-  async getTopTenUsers(): Promise<fromModels.TopTenUser[] | void> {
+  async getTopTenUsers(): Promise<fromModels.TopTenUser[]> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetTopTenUsers.php', {
       ...this.buildAuthParameters(),
     });
@@ -161,9 +156,8 @@ export class RetroAchievementsClient {
         retroRatioPoints: Number(apiUser['3']),
       }));
     } catch (err) {
-      console.error(
-        'RetroAchievements API: There was a problem retrieving the top ten users.',
-        err
+      throw new Error(
+        `RetroAchievements API: There was a problem retrieving the top ten users. ${err}`
       );
     }
   }
@@ -171,7 +165,7 @@ export class RetroAchievementsClient {
   async getUserProgressForGames(
     userName: string,
     gameIds: number[]
-  ): Promise<fromModels.UserProgressForGame[] | void> {
+  ): Promise<fromModels.UserProgressForGame[]> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetUserProgress.php', {
       ...this.buildAuthParameters(),
       u: userName,
@@ -198,9 +192,10 @@ export class RetroAchievementsClient {
 
       return progressItems;
     } catch (err) {
-      console.error(
-        'RetroAchievements API: There was a problem retrieving the progress for these games.',
-        err
+      throw new Error(
+        `RetroAchievements API: There was a problem retrieving the progress for games ${gameIds.join(
+          ', '
+        )}. ${err}`
       );
     }
   }
@@ -208,7 +203,7 @@ export class RetroAchievementsClient {
   async getUserRecentlyPlayedGames(
     userName: string,
     count?: number
-  ): Promise<fromModels.UserRecentlyPlayedGame[] | void> {
+  ): Promise<fromModels.UserRecentlyPlayedGame[]> {
     const requestUrl = urlcat(
       this.baseUrl,
       'API_GetUserRecentlyPlayedGames.php',
@@ -225,16 +220,15 @@ export class RetroAchievementsClient {
 
       return camelcaseKeys(sanitizeProps(responseBody));
     } catch (err) {
-      console.error(
-        `RetroAchievements API: There was a problem retrieving the recently played games for user ${userName}.`,
-        err
+      throw new Error(
+        `RetroAchievements API: There was a problem retrieving the recently played games for user ${userName}. ${err}`
       );
     }
   }
 
   async getUserGameCompletionStats(
     userName: string
-  ): Promise<fromModels.UserGameCompletion[] | void> {
+  ): Promise<fromModels.UserGameCompletion[]> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetUserCompletedGames.php', {
       ...this.buildAuthParameters(),
       u: userName,
@@ -248,9 +242,8 @@ export class RetroAchievementsClient {
         sanitizeProps(responseBody)
       ) as fromModels.UserGameCompletion[];
     } catch (err) {
-      console.error(
-        `RetroAchievements API: There was a problem retrieving the game completion stats for user ${userName}`,
-        err
+      throw new Error(
+        `RetroAchievements API: There was a problem retrieving the game completion stats for user ${userName}. ${err}`
       );
     }
   }
@@ -258,7 +251,7 @@ export class RetroAchievementsClient {
   async getUserAchievementsEarnedOnDate(
     userName: string,
     date: Date
-  ): Promise<fromModels.DatedAchievement[] | void> {
+  ): Promise<fromModels.DatedAchievement[]> {
     const requestUrl = urlcat(
       this.baseUrl,
       'API_GetAchievementsEarnedOnDay.php',
@@ -277,8 +270,8 @@ export class RetroAchievementsClient {
         sanitizeProps(responseBody)
       ) as fromModels.DatedAchievement[];
     } catch (err) {
-      console.error(
-        `RetroAchievements API: There was a problem retrieving achievements for user ${userName}.`
+      throw new Error(
+        `RetroAchievements API: There was a problem retrieving achievements for user ${userName}. ${err}`
       );
     }
   }
@@ -286,7 +279,7 @@ export class RetroAchievementsClient {
   async getUserProgressForGameId(
     userName: string,
     gameId: number
-  ): Promise<fromModels.GameInfoAndUserProgress | void> {
+  ): Promise<fromModels.GameInfoAndUserProgress> {
     const requestUrl = urlcat(
       this.baseUrl,
       'API_GetGameInfoAndUserProgress.php',
@@ -326,8 +319,8 @@ export class RetroAchievementsClient {
 
       return sanitizedResponse;
     } catch (err) {
-      console.error(
-        `RetroAchievements API: There was a problem retrieving game progress for user ${userName} on game id ${gameId}.`
+      throw new Error(
+        `RetroAchievements API: There was a problem retrieving game progress for user ${userName} on game id ${gameId}. ${err}`
       );
     }
   }
@@ -335,7 +328,7 @@ export class RetroAchievementsClient {
   async getUserSummary(
     userName: string,
     numberOfRecentGames?: number
-  ): Promise<fromModels.UserSummary | void> {
+  ): Promise<fromModels.UserSummary> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetUserSummary.php', {
       ...this.buildAuthParameters(),
       u: userName,
@@ -373,8 +366,8 @@ export class RetroAchievementsClient {
 
       return sanitizedResponse;
     } catch (err) {
-      console.error(
-        `RetroAchievements API: There was a problem retrieving the user summary for user ${userName}.`
+      throw new Error(
+        `RetroAchievements API: There was a problem retrieving the user summary for user ${userName}. ${err}`
       );
     }
   }
