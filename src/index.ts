@@ -1,4 +1,5 @@
 export {
+  Achievement,
   ConsoleId,
   DatedAchievement,
   GameInfoAndUserProgress,
