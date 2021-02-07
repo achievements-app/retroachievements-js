@@ -255,6 +255,34 @@ export class RetroAchievementsClient {
     }
   }
 
+  async getUserAchievementsEarnedOnDate(
+    userName: string,
+    date: Date
+  ): Promise<fromModels.DatedAchievement[] | void> {
+    const requestUrl = urlcat(
+      this.baseUrl,
+      'API_GetAchievementsEarnedOnDay.php',
+      {
+        ...this.buildAuthParameters(),
+        u: userName,
+        d: `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDate()}`,
+      }
+    );
+
+    try {
+      const httpResponse = await fetch(requestUrl);
+      const responseBody = (await httpResponse.json()) as fromModels.ApiDatedAchievement[];
+
+      return camelcaseKeys(
+        sanitizeProps(responseBody)
+      ) as fromModels.DatedAchievement[];
+    } catch (err) {
+      console.error(
+        `RetroAchievements API: There was a probelm retrieving achievements for user ${userName}.`
+      );
+    }
+  }
+
   private buildAuthParameters() {
     return {
       z: this.userName,
