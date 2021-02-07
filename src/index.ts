@@ -11,7 +11,7 @@ export {
   UserProgressForGame,
   UserRankAndScore,
   UserRecentlyPlayedGame,
-  UserSummary,
+  UserSummary
 } from './models';
 
 export { RetroAchievementsClient } from './retro-achievements-client';

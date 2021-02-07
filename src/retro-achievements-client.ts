@@ -17,7 +17,7 @@ export class RetroAchievementsClient {
 
   async getConsoleIds(): Promise<fromModels.ConsoleId[]> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetConsoleIDs.php', {
-      ...this.buildAuthParameters(),
+      ...this.buildAuthParameters()
     });
 
     try {
@@ -40,7 +40,7 @@ export class RetroAchievementsClient {
   ): Promise<fromModels.UserRankAndScore> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetUserRankAndScore.php', {
       ...this.buildAuthParameters(),
-      u: userName,
+      u: userName
     });
 
     try {
@@ -65,7 +65,7 @@ export class RetroAchievementsClient {
   async getGameInfoByGameId(gameId: number): Promise<fromModels.GameInfo> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetGame.php', {
       ...this.buildAuthParameters(),
-      i: gameId,
+      i: gameId
     });
 
     try {
@@ -90,7 +90,7 @@ export class RetroAchievementsClient {
   ): Promise<fromModels.GameInfoExtended> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetGameExtended.php', {
       ...this.buildAuthParameters(),
-      i: gameId,
+      i: gameId
     });
 
     try {
@@ -116,7 +116,7 @@ export class RetroAchievementsClient {
           : undefined,
         numDistinctPlayersHardcore: responseBody.NumDistinctPlayersHardcore
           ? Number(responseBody.NumDistinctPlayersHardcore)
-          : undefined,
+          : undefined
       };
     } catch (err) {
       throw new Error(
@@ -130,7 +130,7 @@ export class RetroAchievementsClient {
   ): Promise<fromModels.GameListEntity[]> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetGameList.php', {
       ...this.buildAuthParameters(),
-      i: consoleId,
+      i: consoleId
     });
 
     try {
@@ -148,7 +148,7 @@ export class RetroAchievementsClient {
 
   async getTopTenUsers(): Promise<fromModels.TopTenUser[]> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetTopTenUsers.php', {
-      ...this.buildAuthParameters(),
+      ...this.buildAuthParameters()
     });
 
     try {
@@ -159,7 +159,7 @@ export class RetroAchievementsClient {
       return responseBody.map(apiUser => ({
         userName: apiUser['1'],
         points: Number(apiUser['2']),
-        retroRatioPoints: Number(apiUser['3']),
+        retroRatioPoints: Number(apiUser['3'])
       }));
     } catch (err) {
       throw new Error(
@@ -175,7 +175,7 @@ export class RetroAchievementsClient {
     const requestUrl = urlcat(this.baseUrl, 'API_GetUserProgress.php', {
       ...this.buildAuthParameters(),
       u: userName,
-      i: gameIds.join(', '),
+      i: gameIds.join(', ')
     });
 
     try {
@@ -190,7 +190,7 @@ export class RetroAchievementsClient {
         if (key !== '0') {
           progressItems.push({
             ...camelcaseKeys(sanitizeProps(value)),
-            gameId: Number(key),
+            gameId: Number(key)
           });
         }
       }
@@ -215,7 +215,7 @@ export class RetroAchievementsClient {
       {
         ...this.buildAuthParameters(),
         u: userName,
-        c: count,
+        c: count
       }
     );
 
@@ -237,7 +237,7 @@ export class RetroAchievementsClient {
   ): Promise<fromModels.UserGameCompletion[]> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetUserCompletedGames.php', {
       ...this.buildAuthParameters(),
-      u: userName,
+      u: userName
     });
 
     try {
@@ -265,7 +265,7 @@ export class RetroAchievementsClient {
       {
         ...this.buildAuthParameters(),
         u: userName,
-        d: `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDate()}`,
+        d: `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDate()}`
       }
     );
 
@@ -294,7 +294,7 @@ export class RetroAchievementsClient {
       {
         ...this.buildAuthParameters(),
         u: userName,
-        g: gameId,
+        g: gameId
       }
     );
 
@@ -308,7 +308,7 @@ export class RetroAchievementsClient {
       );
 
       const modifiedResponse: Partial<fromModels.ApiGameInfoAndUserProgress> = {
-        ...responseBody,
+        ...responseBody
       };
 
       delete modifiedResponse.Achievements;
@@ -341,7 +341,7 @@ export class RetroAchievementsClient {
     const requestUrl = urlcat(this.baseUrl, 'API_GetUserSummary.php', {
       ...this.buildAuthParameters(),
       u: userName,
-      g: numberOfRecentGames,
+      g: numberOfRecentGames
     });
 
     try {
@@ -360,7 +360,7 @@ export class RetroAchievementsClient {
       );
 
       const modifiedResponse: Partial<fromModels.ApiUserSummary> = {
-        ...responseBody,
+        ...responseBody
       };
 
       delete modifiedResponse.RecentlyPlayed;
@@ -371,7 +371,7 @@ export class RetroAchievementsClient {
         ...camelcaseKeys(sanitizeProps(modifiedResponse)),
         recentlyPlayed: sanitizedRecentlyPlayed,
         recentAchievements: sanitizedRecentAchievements,
-        awarded: sanitizedAwarded,
+        awarded: sanitizedAwarded
       };
 
       return sanitizedResponse;
@@ -385,7 +385,7 @@ export class RetroAchievementsClient {
   private buildAuthParameters() {
     return {
       z: this.userName,
-      y: this.apiKey,
+      y: this.apiKey
     };
   }
 
@@ -420,7 +420,7 @@ export class RetroAchievementsClient {
     for (const [gameId, apiAwarded] of Object.entries(apiAwardedList)) {
       awarded.push({
         gameId: Number(gameId),
-        ...camelcaseKeys(sanitizeProps(apiAwarded)),
+        ...camelcaseKeys(sanitizeProps(apiAwarded))
       });
     }
 

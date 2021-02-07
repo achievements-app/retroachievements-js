@@ -11,7 +11,7 @@ describe('RetroAchievementsClient', () => {
   beforeEach(() => {
     client = new RetroAchievementsClient({
       userName: 'MockUserName',
-      apiKey: 'MockApiKey',
+      apiKey: 'MockApiKey'
     });
   });
 
@@ -32,12 +32,12 @@ describe('RetroAchievementsClient', () => {
       const mockConsoleIds: fromModels.ApiConsoleId[] = [
         {
           ID: '1',
-          Name: 'Mega Drive',
+          Name: 'Mega Drive'
         },
         {
           ID: '2',
-          Name: 'Nintendo 64',
-        },
+          Name: 'Nintendo 64'
+        }
       ];
 
       server = setupServer(
@@ -58,7 +58,7 @@ describe('RetroAchievementsClient', () => {
       expect(consoleIds).toHaveLength(2);
       expect(consoleIds).toContainEqual({
         id: 1,
-        name: 'Mega Drive',
+        name: 'Mega Drive'
       });
     });
   });
@@ -69,7 +69,7 @@ describe('RetroAchievementsClient', () => {
       const mockUserRankAndScore: fromModels.ApiUserRankAndScore = {
         Score: 6756,
         Rank: '4655',
-        TotalRanked: '88613',
+        TotalRanked: '88613'
       };
 
       server = setupServer(
@@ -98,7 +98,7 @@ describe('RetroAchievementsClient', () => {
       const mockUserRankAndScore: fromModels.ApiUserRankAndScore = {
         Score: null,
         Rank: '1',
-        TotalRanked: '88613',
+        TotalRanked: '88613'
       };
 
       server = setupServer(
@@ -138,7 +138,7 @@ describe('RetroAchievementsClient', () => {
         Genre: 'Platformer',
         Released: 'April 21, 1989',
         GameTitle: 'Super Mario Land',
-        Console: 'Game Boy',
+        Console: 'Game Boy'
       };
 
       server = setupServer(
@@ -168,7 +168,7 @@ describe('RetroAchievementsClient', () => {
         GameTitle: 'UNRECOGNISED',
         ConsoleID: null,
         Console: null,
-        ForumTopicID: null,
+        ForumTopicID: null
       };
 
       server = setupServer(
@@ -205,7 +205,7 @@ describe('RetroAchievementsClient', () => {
         DateCreated: '2013-05-22 13:12:10',
         BadgeName: '109695',
         DisplayOrder: '1',
-        MemAddr: 'ce2ebf6f40272f66b1c0dc972f18665d',
+        MemAddr: 'ce2ebf6f40272f66b1c0dc972f18665d'
       };
 
       const mockAchievementTwo: fromModels.ApiAchievement = {
@@ -222,7 +222,7 @@ describe('RetroAchievementsClient', () => {
         DateCreated: '2019-04-11 22:41:01',
         BadgeName: '109696',
         DisplayOrder: '2',
-        MemAddr: '67f757eb24b56b2f0205ce502bcee91c',
+        MemAddr: '67f757eb24b56b2f0205ce502bcee91c'
       };
 
       const mockGameInfoExtended: fromModels.ApiGameInfoExtended = {
@@ -247,8 +247,8 @@ describe('RetroAchievementsClient', () => {
         NumDistinctPlayersHardcore: '2604',
         Achievements: {
           1144: mockAchievementOne,
-          75397: mockAchievementTwo,
-        },
+          75397: mockAchievementTwo
+        }
       };
 
       server = setupServer(
@@ -277,7 +277,7 @@ describe('RetroAchievementsClient', () => {
       // ARRANGE
       const mockGameInfoExtended: fromModels.ApiGameInfoExtended = {
         Achievements: [],
-        RichPresencePatch: 'd41d8cd98f00b204e9800998ecf8427e',
+        RichPresencePatch: 'd41d8cd98f00b204e9800998ecf8427e'
       };
 
       server = setupServer(
@@ -307,15 +307,15 @@ describe('RetroAchievementsClient', () => {
           ID: '8265',
           ConsoleID: '1',
           ImageIcon: '/Images/000001.png',
-          ConsoleName: 'Mega Drive',
+          ConsoleName: 'Mega Drive'
         },
         {
           Title: '3 Ninjas Kick Back',
           ID: '397',
           ConsoleID: '1',
           ImageIcon: '/Images/039030.png',
-          ConsoleName: 'Mega Drive',
-        },
+          ConsoleName: 'Mega Drive'
+        }
       ];
 
       server = setupServer(
@@ -340,15 +340,15 @@ describe('RetroAchievementsClient', () => {
           consoleName: 'Mega Drive',
           id: 8265,
           imageIcon: '/Images/000001.png',
-          title: '16t',
+          title: '16t'
         },
         {
           consoleId: 1,
           consoleName: 'Mega Drive',
           id: 397,
           imageIcon: '/Images/039030.png',
-          title: '3 Ninjas Kick Back',
-        },
+          title: '3 Ninjas Kick Back'
+        }
       ]);
     });
   });
@@ -360,53 +360,53 @@ describe('RetroAchievementsClient', () => {
         {
           '1': 'MaxMilyin',
           '2': '484223',
-          '3': '1445229',
+          '3': '1445229'
         },
         {
           '1': 'HippopotamusRex',
           '2': '452006',
-          '3': '1640777',
+          '3': '1640777'
         },
         {
           '1': 'Wendigo',
           '2': '304245',
-          '3': '1208458',
+          '3': '1208458'
         },
         {
           '1': 'BerserkerBR',
           '2': '302996',
-          '3': '908360',
+          '3': '908360'
         },
         {
           '1': 'Sarconius',
           '2': '290574',
-          '3': '1229416',
+          '3': '1229416'
         },
         {
           '1': 'Andrey199650',
           '2': '283193',
-          '3': '636198',
+          '3': '636198'
         },
         {
           '1': 'Xymjak',
           '2': '260148',
-          '3': '959388',
+          '3': '959388'
         },
         {
           '1': 'FabricioPrie',
           '2': '257027',
-          '3': '615678',
+          '3': '615678'
         },
         {
           '1': 'Veritasu',
           '2': '250336',
-          '3': '589807',
+          '3': '589807'
         },
         {
           '1': 'mikeisafighter',
           '2': '237742',
-          '3': '837535',
-        },
+          '3': '837535'
+        }
       ];
 
       server = setupServer(
@@ -428,7 +428,7 @@ describe('RetroAchievementsClient', () => {
       expect(topTen[0]).toEqual({
         points: 484223,
         retroRatioPoints: 1445229,
-        userName: 'MaxMilyin',
+        userName: 'MaxMilyin'
       });
     });
   });
@@ -445,7 +445,7 @@ describe('RetroAchievementsClient', () => {
           NumAchieved: 0,
           ScoreAchieved: 0,
           NumAchievedHardcore: 0,
-          ScoreAchievedHardcore: 0,
+          ScoreAchievedHardcore: 0
         },
         '1172': {
           NumPossibleAchievements: '76',
@@ -453,7 +453,7 @@ describe('RetroAchievementsClient', () => {
           NumAchieved: '76',
           ScoreAchieved: '520',
           NumAchievedHardcore: '76',
-          ScoreAchievedHardcore: '520',
+          ScoreAchievedHardcore: '520'
         },
         '1448': {
           NumPossibleAchievements: '50',
@@ -461,8 +461,8 @@ describe('RetroAchievementsClient', () => {
           NumAchieved: '17',
           ScoreAchieved: '115',
           NumAchievedHardcore: '17',
-          ScoreAchievedHardcore: '115',
-        },
+          ScoreAchievedHardcore: '115'
+        }
       };
 
       server = setupServer(
@@ -480,7 +480,7 @@ describe('RetroAchievementsClient', () => {
       const userProgress = await client.getUserProgressForGames('WCopeland', [
         1,
         1172,
-        1448,
+        1448
       ]);
 
       // ASSERT
@@ -493,7 +493,7 @@ describe('RetroAchievementsClient', () => {
         numPossibleAchievements: 24,
         possibleScore: 255,
         scoreAchieved: 0,
-        scoreAchievedHardcore: 0,
+        scoreAchievedHardcore: 0
       });
 
       expect(userProgress[1]).toEqual({
@@ -503,7 +503,7 @@ describe('RetroAchievementsClient', () => {
         numPossibleAchievements: 76,
         possibleScore: 520,
         scoreAchieved: 520,
-        scoreAchievedHardcore: 520,
+        scoreAchievedHardcore: 520
       });
     });
   });
@@ -523,7 +523,7 @@ describe('RetroAchievementsClient', () => {
           NumPossibleAchievements: '50',
           PossibleScore: '490',
           NumAchieved: '17',
-          ScoreAchieved: '115',
+          ScoreAchieved: '115'
         },
         {
           GameID: '1449',
@@ -536,8 +536,8 @@ describe('RetroAchievementsClient', () => {
           NumPossibleAchievements: '26',
           PossibleScore: '336',
           NumAchieved: '1',
-          ScoreAchieved: '1',
-        },
+          ScoreAchieved: '1'
+        }
       ];
 
       server = setupServer(
@@ -571,7 +571,7 @@ describe('RetroAchievementsClient', () => {
           numPossibleAchievements: 50,
           possibleScore: 490,
           scoreAchieved: 115,
-          title: 'Mega Man',
+          title: 'Mega Man'
         },
         {
           consoleId: 7,
@@ -584,8 +584,8 @@ describe('RetroAchievementsClient', () => {
           numPossibleAchievements: 26,
           possibleScore: 336,
           scoreAchieved: 1,
-          title: 'Final Fantasy',
-        },
+          title: 'Final Fantasy'
+        }
       ]);
     });
   });
@@ -602,7 +602,7 @@ describe('RetroAchievementsClient', () => {
           NumAwarded: '13',
           MaxPossible: '13',
           PctWon: '1.0000',
-          HardcoreMode: '0',
+          HardcoreMode: '0'
         },
         {
           GameID: '1446',
@@ -612,8 +612,8 @@ describe('RetroAchievementsClient', () => {
           NumAwarded: '72',
           MaxPossible: '78',
           PctWon: '0.9231',
-          HardcoreMode: '0',
-        },
+          HardcoreMode: '0'
+        }
       ];
 
       server = setupServer(
@@ -643,7 +643,7 @@ describe('RetroAchievementsClient', () => {
           maxPossible: 13,
           numAwarded: 13,
           pctWon: 1,
-          title: 'Donkey Kong Jr.',
+          title: 'Donkey Kong Jr.'
         },
         {
           consoleName: 'NES',
@@ -653,8 +653,8 @@ describe('RetroAchievementsClient', () => {
           maxPossible: 78,
           numAwarded: 72,
           pctWon: 0.9231,
-          title: 'Super Mario Bros.',
-        },
+          title: 'Super Mario Bros.'
+        }
       ]);
     });
   });
@@ -678,7 +678,7 @@ describe('RetroAchievementsClient', () => {
           ConsoleName: 'Mega Drive',
           CumulScore: 5,
           BadgeURL: '/Badge/04983.png',
-          GameURL: '/Game/9',
+          GameURL: '/Game/9'
         },
         {
           Date: '2014-01-04 19:31:59',
@@ -695,8 +695,8 @@ describe('RetroAchievementsClient', () => {
           ConsoleName: 'Mega Drive',
           CumulScore: 10,
           BadgeURL: '/Badge/04971.png',
-          GameURL: '/Game/9',
-        },
+          GameURL: '/Game/9'
+        }
       ];
 
       server = setupServer(
@@ -734,7 +734,7 @@ describe('RetroAchievementsClient', () => {
           gameUrl: '/Game/9',
           hardcoreMode: 0,
           points: 5,
-          title: 'Keeps The Doctor Away',
+          title: 'Keeps The Doctor Away'
         },
         {
           achievementId: 4337,
@@ -751,8 +751,8 @@ describe('RetroAchievementsClient', () => {
           gameUrl: '/Game/9',
           hardcoreMode: 0,
           points: 5,
-          title: 'Red Gem',
-        },
+          title: 'Red Gem'
+        }
       ]);
     });
   });
@@ -794,13 +794,13 @@ describe('RetroAchievementsClient', () => {
             DateCreated: '2017-10-29 19:02:40',
             BadgeName: '73832',
             DisplayOrder: '0',
-            MemAddr: '92346871ff9c98cac45c0f42b911aedd',
-          },
+            MemAddr: '92346871ff9c98cac45c0f42b911aedd'
+          }
         },
         NumAwardedToUser: 17,
         NumAwardedToUserHardcore: 17,
         UserCompletion: '34.00%',
-        UserCompletionHardcore: '34.00%',
+        UserCompletionHardcore: '34.00%'
       };
 
       server = setupServer(
@@ -859,9 +859,9 @@ describe('RetroAchievementsClient', () => {
             dateCreated: new Date('2017-10-29 19:02:40'),
             badgeName: 73832,
             displayOrder: 0,
-            memAddr: '92346871ff9c98cac45c0f42b911aedd',
-          },
-        ],
+            memAddr: '92346871ff9c98cac45c0f42b911aedd'
+          }
+        ]
       });
     });
   });
@@ -879,7 +879,7 @@ describe('RetroAchievementsClient', () => {
             Title: 'Mega Man',
             ImageIcon: '/Images/024519.png',
             LastPlayed: '2020-11-09 22:30:26',
-            MyVote: null,
+            MyVote: null
           },
           {
             GameID: '1449',
@@ -888,8 +888,8 @@ describe('RetroAchievementsClient', () => {
             Title: 'Final Fantasy',
             ImageIcon: '/Images/024314.png',
             LastPlayed: '2020-11-03 03:08:42',
-            MyVote: null,
-          },
+            MyVote: null
+          }
         ],
         MemberSince: '2020-02-02 20:10:35',
         LastActivity: {
@@ -899,7 +899,7 @@ describe('RetroAchievementsClient', () => {
           activitytype: '2',
           User: 'WCopeland',
           data: null,
-          data2: null,
+          data2: null
         },
         RichPresenceMsg: 'Wily 1|🚶1|💯609500',
         LastGameID: '1448',
@@ -920,7 +920,7 @@ describe('RetroAchievementsClient', () => {
           IsFinal: false,
           ConsoleName: 'NES',
           RichPresencePatch:
-            'Lookup:Stage\r\n0x00=Cutman\r\n0x01=Iceman\r\n0x02=Bombman\r\n0x03=Fireman\r\n0x04=Elecman\r\n0x05=Gutsman\r\n0x06=Wily 1\r\n0x07=Wily 2\r\n0x08=Wily 3\r\n0x09=Wily 4\r\n0x0a=Title Screen\r\n0x0b=The End\r\n\r\nFormat:Lives\r\nFormatType=VALUE\r\n\r\nFormat:Score\r\nFormatType=VALUE\r\n\r\nDisplay:\r\n?0xh0031=10?Rocking it on the title screen\r\n@Stage(0xh0031)|🚶@Lives(0xh00a6)|💯@Score(0xh0072*1_0xh0073*10_0xh0074*100_0xh0075*1000_0xh0076*10000_0xh0077*100000_0xh0078*1000000)',
+            'Lookup:Stage\r\n0x00=Cutman\r\n0x01=Iceman\r\n0x02=Bombman\r\n0x03=Fireman\r\n0x04=Elecman\r\n0x05=Gutsman\r\n0x06=Wily 1\r\n0x07=Wily 2\r\n0x08=Wily 3\r\n0x09=Wily 4\r\n0x0a=Title Screen\r\n0x0b=The End\r\n\r\nFormat:Lives\r\nFormatType=VALUE\r\n\r\nFormat:Score\r\nFormatType=VALUE\r\n\r\nDisplay:\r\n?0xh0031=10?Rocking it on the title screen\r\n@Stage(0xh0031)|🚶@Lives(0xh00a6)|💯@Score(0xh0072*1_0xh0073*10_0xh0074*100_0xh0075*1000_0xh0076*10000_0xh0077*100000_0xh0078*1000000)'
         },
         ContribCount: '0',
         ContribYield: '0',
@@ -939,7 +939,7 @@ describe('RetroAchievementsClient', () => {
             NumAchieved: '17',
             ScoreAchieved: '115',
             NumAchievedHardcore: '17',
-            ScoreAchievedHardcore: '115',
+            ScoreAchievedHardcore: '115'
           },
           '1449': {
             NumPossibleAchievements: '26',
@@ -947,8 +947,8 @@ describe('RetroAchievementsClient', () => {
             NumAchieved: '1',
             ScoreAchieved: '1',
             NumAchievedHardcore: '1',
-            ScoreAchievedHardcore: '1',
-          },
+            ScoreAchievedHardcore: '1'
+          }
         },
         RecentAchievements: {
           '1448': {
@@ -962,7 +962,7 @@ describe('RetroAchievementsClient', () => {
               BadgeName: '73833',
               IsAwarded: '1',
               DateAwarded: '2020-11-09 23:08:08',
-              HardcoreAchieved: '0',
+              HardcoreAchieved: '0'
             },
             '3472': {
               ID: '3472',
@@ -975,14 +975,14 @@ describe('RetroAchievementsClient', () => {
               BadgeName: '73852',
               IsAwarded: '1',
               DateAwarded: '2020-11-09 23:07:59',
-              HardcoreAchieved: '0',
-            },
-          },
+              HardcoreAchieved: '0'
+            }
+          }
         },
         Points: '6756',
         UserPic: '/UserPic/WCopeland.png',
         TotalRanked: '89202',
-        Status: 'Offline',
+        Status: 'Offline'
       };
 
       server = setupServer(
@@ -1008,7 +1008,7 @@ describe('RetroAchievementsClient', () => {
           numAchieved: 17,
           scoreAchieved: 115,
           numAchievedHardcore: 17,
-          scoreAchievedHardcore: 115,
+          scoreAchievedHardcore: 115
         },
         {
           gameId: 1449,
@@ -1017,8 +1017,8 @@ describe('RetroAchievementsClient', () => {
           numAchieved: 1,
           scoreAchieved: 1,
           numAchievedHardcore: 1,
-          scoreAchievedHardcore: 1,
-        },
+          scoreAchievedHardcore: 1
+        }
       ]);
 
       expect(userSummary.recentAchievements).toEqual([
@@ -1032,7 +1032,7 @@ describe('RetroAchievementsClient', () => {
           badgeName: 73833,
           isAwarded: 1,
           dateAwarded: new Date('2020-11-09 23:08:08'),
-          hardcoreAchieved: 0,
+          hardcoreAchieved: 0
         },
         {
           id: 3472,
@@ -1045,8 +1045,8 @@ describe('RetroAchievementsClient', () => {
           badgeName: 73852,
           isAwarded: 1,
           dateAwarded: new Date('2020-11-09 23:07:59'),
-          hardcoreAchieved: 0,
-        },
+          hardcoreAchieved: 0
+        }
       ]);
     });
   });

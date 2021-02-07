@@ -12,7 +12,7 @@ describe('Util: sanitizeProps', () => {
       someString: 'mockSomeString',
       someNumber: '1',
       anotherNumber: '2',
-      anotherString: 'mockAnotherString',
+      anotherString: 'mockAnotherString'
     };
 
     // ACT
@@ -23,7 +23,7 @@ describe('Util: sanitizeProps', () => {
       someString: 'mockSomeString',
       someNumber: 1,
       anotherNumber: 2,
-      anotherString: 'mockAnotherString',
+      anotherString: 'mockAnotherString'
     });
   });
 
@@ -35,9 +35,9 @@ describe('Util: sanitizeProps', () => {
       someDeepObject: {
         anotherNumber: '2',
         anotherString: 'mockAnotherString',
-        yetAnotherNumber: '3',
+        yetAnotherNumber: '3'
       },
-      andAnotherNumber: '4',
+      andAnotherNumber: '4'
     };
 
     // ACT
@@ -50,9 +50,9 @@ describe('Util: sanitizeProps', () => {
       someDeepObject: {
         anotherNumber: 2,
         anotherString: 'mockAnotherString',
-        yetAnotherNumber: 3,
+        yetAnotherNumber: 3
       },
-      andAnotherNumber: 4,
+      andAnotherNumber: 4
     });
   });
 });
