@@ -16,5 +16,7 @@ export interface Achievement {
   gameTitle?: string;
   isAwarded?: number;
   dateAwarded?: Date;
+  dateEarned?: Date;
+  dateEarnedHardcore?: Date;
   hardcoreAchieved?: number;
 }
