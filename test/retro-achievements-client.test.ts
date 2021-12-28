@@ -189,6 +189,45 @@ describe('RetroAchievementsClient', () => {
     });
   });
 
+  describe('getAchievementDistributionForGameId', () => {
+    it('given a game id and hardcore flag, returns the achievement distribution', async () => {
+      // ARRANGE
+      const mockResponse: Record<string, number> = {
+        '1': 128,
+        '2': 71,
+        '3': 62,
+        '4': 102,
+        '5': 115,
+        '6': 34,
+        '7': 30,
+        '8': 31,
+        '9': 22,
+        '10': 15
+      };
+
+      server = setupServer(
+        rest.get(
+          'https://retroachievements.org/API/API_GetAchievementDistribution.php',
+          (_, res, ctx) => {
+            return res(ctx.json(mockResponse));
+          }
+        )
+      );
+
+      server.listen();
+
+      // ACT
+      const achievementDistribution = await client.getAchievementDistributionForGameId(
+        1471,
+        true
+      );
+
+      // ASSERT
+      expect(achievementDistribution).toBeDefined();
+      expect(achievementDistribution['10']).toEqual(15);
+    });
+  });
+
   describe('getExtendedGameInfoByGameId', () => {
     it('given a game id, returns the extended game info', async () => {
       // ARRANGE

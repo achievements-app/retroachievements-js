@@ -255,6 +255,23 @@ export class RetroAchievementsClient {
     }
   }
 
+  async getAchievementDistributionForGameId(
+    gameId: number,
+    isHardcoreOnly: boolean
+  ): Promise<Record<string, number>> {
+    const requestUrl = urlcat(
+      this.baseUrl,
+      'API_GetAchievementDistribution.php',
+      {
+        ...this.buildAuthParameters(),
+        i: gameId,
+        h: isHardcoreOnly ? 1 : 0
+      }
+    );
+
+    return await this.loadResponseBody<Record<string, number>>(requestUrl);
+  }
+
   async getUserAchievementsEarnedOnDate(
     userName: string,
     date: Date
