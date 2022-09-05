@@ -1,7 +1,16 @@
 {
+  "name": "retroachievements-js",
+  "author": "Wes Copeland",
   "version": "0.0.0-development",
   "license": "MIT",
   "main": "dist/index.js",
+  "module": "dist/retroachievements-js.esm.js",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/retroachievements-js.esm.js"
+    }
+  },
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
@@ -33,9 +42,6 @@
     "singleQuote": true,
     "trailingComma": "none"
   },
-  "name": "retroachievements-js",
-  "author": "wescopeland",
-  "module": "dist/retroachievements-nodejs-api.esm.js",
   "size-limit": [
     {
       "path": "dist/retroachievements-js.cjs.production.min.js",
