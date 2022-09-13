@@ -283,8 +283,8 @@ export class RetroAchievementsClient {
       {
         ...this.buildAuthParameters(),
         u: userName,
-        f: (dateFrom.getTime() / 100).toFixed(0),
-        t: (dateTo.getTime() / 100).toFixed(0)
+        f: (dateFrom.getTime() / 1000).toFixed(0),
+        t: (dateTo.getTime() / 1000).toFixed(0)
       }
     );
 
