@@ -283,8 +283,8 @@ export class RetroAchievementsClient {
       {
         ...this.buildAuthParameters(),
         u: userName,
-        f: `${dateFrom.getUTCFullYear()}-${dateFrom.getUTCMonth()}-${dateFrom.getUTCDate()}`,
-        t: `${dateTo.getUTCFullYear()}-${dateTo.getUTCMonth()}-${dateTo.getUTCDate()}`
+        f: (dateFrom.getTime() / 100).toFixed(0),
+        t: (dateTo.getTime() / 100).toFixed(0)
       }
     );
 
