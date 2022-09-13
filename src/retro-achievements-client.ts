@@ -272,6 +272,37 @@ export class RetroAchievementsClient {
     return await this.loadResponseBody<Record<string, number>>(requestUrl);
   }
 
+  async getUserAchievementsEarnedBetweenDates(
+    userName: string,
+    dateFrom: Date,
+    dateTo: Date
+  ): Promise<fromModels.DatedAchievement[]> {
+    const requestUrl = urlcat(
+      this.baseUrl,
+      'API_GetAchievementsEarnedBetween.php',
+      {
+        ...this.buildAuthParameters(),
+        u: userName,
+        f: `${dateFrom.getUTCFullYear()}-${dateFrom.getUTCMonth()}-${dateFrom.getUTCDate()}`,
+        t: `${dateTo.getUTCFullYear()}-${dateTo.getUTCMonth()}-${dateTo.getUTCDate()}`
+      }
+    );
+
+    try {
+      const responseBody = await this.loadResponseBody<
+        fromModels.ApiDatedAchievement[]
+      >(requestUrl);
+
+      return camelcaseKeys(
+        sanitizeProps(responseBody)
+      ) as fromModels.DatedAchievement[];
+    } catch (err) {
+      throw new Error(
+        `RetroAchievements API: There was a problem retrieving achievements for user ${userName}. ${err}`
+      );
+    }
+  }
+
   async getUserAchievementsEarnedOnDate(
     userName: string,
     date: Date

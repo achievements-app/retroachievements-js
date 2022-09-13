@@ -698,6 +698,105 @@ describe('RetroAchievementsClient', () => {
     });
   });
 
+  describe('getUserAchievementsEarnedBetweenDates', () => {
+    it('returns a list of achievements that a user earned within a given date range', async () => {
+      // ARRANGE
+      const mockEarnedAchievements: fromModels.ApiDatedAchievement[] = [
+        {
+          Date: '2014-01-04 19:31:23',
+          HardcoreMode: '0',
+          AchievementID: '58',
+          Title: 'Keeps The Doctor Away',
+          Description: 'Collect 30 apples',
+          BadgeName: '04983',
+          Points: '5',
+          Author: 'Scott',
+          GameTitle: 'Castle of Illusion starring Mickey Mouse',
+          GameIcon: '/Images/000778.png',
+          GameID: '9',
+          ConsoleName: 'Mega Drive',
+          CumulScore: 5,
+          BadgeURL: '/Badge/04983.png',
+          GameURL: '/Game/9'
+        },
+        {
+          Date: '2014-01-05 19:31:59',
+          HardcoreMode: '0',
+          AchievementID: '4337',
+          Title: 'Red Gem',
+          Description: 'Collect the Red Gem',
+          BadgeName: '04971',
+          Points: '5',
+          Author: 'Scott',
+          GameTitle: 'Castle of Illusion starring Mickey Mouse',
+          GameIcon: '/Images/000778.png',
+          GameID: '9',
+          ConsoleName: 'Mega Drive',
+          CumulScore: 10,
+          BadgeURL: '/Badge/04971.png',
+          GameURL: '/Game/9'
+        }
+      ];
+
+      server = setupServer(
+        rest.get(
+          'https://retroachievements.org/API/API_GetAchievementsEarnedBetween.php',
+          (_, res, ctx) => {
+            return res(ctx.json(mockEarnedAchievements));
+          }
+        )
+      );
+
+      server.listen();
+
+      // ACT
+      const earnedAchievements = await client.getUserAchievementsEarnedBetweenDates(
+        'Scott',
+        new Date('2014-01-04'),
+        new Date('2014-01-05')
+      );
+
+      // ASSERT
+      expect(earnedAchievements).toHaveLength(2);
+      expect(earnedAchievements).toEqual([
+        {
+          achievementId: 58,
+          author: 'Scott',
+          badgeName: '04983',
+          badgeUrl: '/Badge/04983.png',
+          consoleName: 'Mega Drive',
+          cumulScore: 5,
+          date: new Date('2014-01-04 19:31:23'),
+          description: 'Collect 30 apples',
+          gameIcon: '/Images/000778.png',
+          gameId: 9,
+          gameTitle: 'Castle of Illusion starring Mickey Mouse',
+          gameUrl: '/Game/9',
+          hardcoreMode: 0,
+          points: 5,
+          title: 'Keeps The Doctor Away'
+        },
+        {
+          achievementId: 4337,
+          author: 'Scott',
+          badgeName: '04971',
+          badgeUrl: '/Badge/04971.png',
+          consoleName: 'Mega Drive',
+          cumulScore: 10,
+          date: new Date('2014-01-05 19:31:59'),
+          description: 'Collect the Red Gem',
+          gameIcon: '/Images/000778.png',
+          gameId: 9,
+          gameTitle: 'Castle of Illusion starring Mickey Mouse',
+          gameUrl: '/Game/9',
+          hardcoreMode: 0,
+          points: 5,
+          title: 'Red Gem'
+        }
+      ]);
+    });
+  });
+
   describe('getUserAchievementsEarnedOnDate', () => {
     it('returns a list of achievements that a user earned on an exact date', async () => {
       // ARRANGE
