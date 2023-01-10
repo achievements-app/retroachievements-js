@@ -1,10 +1,13 @@
 export interface UserGameCompletion {
   gameId: number;
   consoleName: string;
+  consoleId: number;
   imageIcon: string;
   title: string;
-  numAwarded: number;
   maxPossible: number;
+  'max(awHardcoreMode)': number;
+  numAwarded: number;
+  numAwardedHc: number;
   pctWon: number;
-  hardcoreMode: number;
+  pctWonHc: number;
 }
