@@ -634,24 +634,30 @@ describe('RetroAchievementsClient', () => {
       // ARRANGE
       const mockUserGameCompletions: fromModels.ApiUserGameCompletion[] = [
         {
-          GameID: '1465',
-          ConsoleName: 'NES',
-          ImageIcon: '/Images/024531.png',
-          Title: 'Donkey Kong Jr.',
-          NumAwarded: '13',
-          MaxPossible: '13',
+          GameID: '11406',
+          ConsoleName: 'PlayStation',
+          ConsoleID: '12',
+          ImageIcon: '/Images/042133.png',
+          Title: 'Mortal Kombat 4',
+          MaxPossible: '131',
+          'MAX(aw.HardcoreMode)': '1',
+          NumAwarded: '131',
+          NumAwardedHC: '131',
           PctWon: '1.0000',
-          HardcoreMode: '0'
+          PctWonHC: '1.0000'
         },
         {
-          GameID: '1446',
-          ConsoleName: 'NES',
-          ImageIcon: '/Images/036035.png',
-          Title: 'Super Mario Bros.',
-          NumAwarded: '72',
-          MaxPossible: '78',
-          PctWon: '0.9231',
-          HardcoreMode: '0'
+          GameID: '10116',
+          ConsoleName: 'Nintendo 64',
+          ConsoleID: '2',
+          ImageIcon: '/Images/042459.png',
+          Title: 'Mortal Kombat 4',
+          MaxPossible: '130',
+          'MAX(aw.HardcoreMode)': '1',
+          NumAwarded: '130',
+          NumAwardedHC: '130',
+          PctWon: '1.0000',
+          PctWonHC: '1.0000'
         }
       ];
 
@@ -675,24 +681,30 @@ describe('RetroAchievementsClient', () => {
       expect(userGameCompletions).toHaveLength(2);
       expect(userGameCompletions).toEqual([
         {
-          consoleName: 'NES',
-          gameId: 1465,
-          hardcoreMode: 0,
-          imageIcon: '/Images/024531.png',
-          maxPossible: 13,
-          numAwarded: 13,
+          gameId: 11406,
+          consoleName: 'PlayStation',
+          consoleId: 12,
+          imageIcon: '/Images/042133.png',
+          title: 'Mortal Kombat 4',
+          maxPossible: 131,
+          'max(awHardcoreMode)': 1,
+          numAwarded: 131,
+          numAwardedHc: 131,
           pctWon: 1,
-          title: 'Donkey Kong Jr.'
+          pctWonHc: 1
         },
         {
-          consoleName: 'NES',
-          gameId: 1446,
-          hardcoreMode: 0,
-          imageIcon: '/Images/036035.png',
-          maxPossible: 78,
-          numAwarded: 72,
-          pctWon: 0.9231,
-          title: 'Super Mario Bros.'
+          gameId: 10116,
+          consoleName: 'Nintendo 64',
+          consoleId: 2,
+          imageIcon: '/Images/042459.png',
+          title: 'Mortal Kombat 4',
+          maxPossible: 130,
+          'max(awHardcoreMode)': 1,
+          numAwarded: 130,
+          numAwardedHc: 130,
+          pctWon: 1,
+          pctWonHc: 1
         }
       ]);
     });

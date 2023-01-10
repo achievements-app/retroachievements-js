@@ -1,10 +1,13 @@
 export interface ApiUserGameCompletion {
   GameID: string;
   ConsoleName: string;
+  ConsoleID: string;
   ImageIcon: string;
   Title: string;
-  NumAwarded: string;
   MaxPossible: string;
+  'MAX(aw.HardcoreMode)': string;
+  NumAwarded: string;
+  NumAwardedHC: string;
   PctWon: string;
-  HardcoreMode: string;
+  PctWonHC: string;
 }
