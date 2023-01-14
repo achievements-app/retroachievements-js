@@ -562,7 +562,9 @@ describe('RetroAchievementsClient', () => {
           NumPossibleAchievements: '50',
           PossibleScore: '490',
           NumAchieved: '17',
-          ScoreAchieved: '115'
+          ScoreAchieved: '115',
+          NumAchievedHardcore: '17',
+          ScoreAchievedHardcore: '115'
         },
         {
           GameID: '1449',
@@ -575,7 +577,9 @@ describe('RetroAchievementsClient', () => {
           NumPossibleAchievements: '26',
           PossibleScore: '336',
           NumAchieved: '1',
-          ScoreAchieved: '1'
+          ScoreAchieved: '1',
+          NumAchievedHardcore: '0',
+          ScoreAchievedHardcore: '0'
         }
       ];
 
@@ -610,7 +614,9 @@ describe('RetroAchievementsClient', () => {
           numPossibleAchievements: 50,
           possibleScore: 490,
           scoreAchieved: 115,
-          title: 'Mega Man'
+          title: 'Mega Man',
+          numAchievedHardcore: 17,
+          scoreAchievedHardcore: 115
         },
         {
           consoleId: 7,
@@ -623,7 +629,9 @@ describe('RetroAchievementsClient', () => {
           numPossibleAchievements: 26,
           possibleScore: 336,
           scoreAchieved: 1,
-          title: 'Final Fantasy'
+          title: 'Final Fantasy',
+          numAchievedHardcore: 0,
+          scoreAchievedHardcore: 0
         }
       ]);
     });
