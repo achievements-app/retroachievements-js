@@ -10,4 +10,6 @@ export interface ApiUserRecentlyPlayedGame {
   PossibleScore: string;
   NumAchieved: string;
   ScoreAchieved: string;
+  NumAchievedHardcore: string;
+  ScoreAchievedHardcore: string;
 }

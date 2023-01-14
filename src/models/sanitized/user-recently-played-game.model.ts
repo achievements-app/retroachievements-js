@@ -10,4 +10,6 @@ export interface UserRecentlyPlayedGame {
   possibleScore: number;
   numAchieved: number;
   scoreAchieved: number;
+  numAchievedHardcore: string;
+  scoreAchievedHardcore: string;
 }
