@@ -382,14 +382,12 @@ export class RetroAchievementsClient {
     }
   }
 
-  async getUserSummary(
-    userName: string,
-    numberOfRecentGames?: number
-  ): Promise<fromModels.UserSummary> {
+  async getUserSummary(userName: string): Promise<fromModels.UserSummary> {
     const requestUrl = urlcat(this.baseUrl, 'API_GetUserSummary.php', {
       ...this.buildAuthParameters(),
       u: userName,
-      g: numberOfRecentGames
+      g: 0,
+      a: 0
     });
 
     try {
