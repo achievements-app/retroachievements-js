@@ -255,6 +255,27 @@ export class RetroAchievementsClient {
     }
   }
 
+  async getUserPoints(userName: string): Promise<fromModels.UserPoints> {
+    const requestUrl = urlcat(this.baseUrl, 'API_GetUserPoints.php', {
+      ...this.buildAuthParameters(),
+      u: userName
+    });
+
+    try {
+      const responseBody = await this.loadResponseBody<
+        fromModels.ApiUserPoints
+      >(requestUrl);
+
+      return camelcaseKeys(
+        sanitizeProps(responseBody)
+      ) as fromModels.UserPoints;
+    } catch (err) {
+      throw new Error(
+        `RetroAchievements API: There was a problem retrieving the points stats for user ${userName}. ${err}`
+      );
+    }
+  }
+
   async getAchievementDistributionForGameId(
     gameId: number,
     isHardcoreOnly: boolean

@@ -22,7 +22,6 @@ export interface UserSummary {
   totalTruePoints: number;
   permissions: number;
   untracked: number;
-  id: number;
   userWallActive: number;
   motto: string;
   rank: number;

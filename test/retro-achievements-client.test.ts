@@ -648,11 +648,9 @@ describe('RetroAchievementsClient', () => {
           ImageIcon: '/Images/042133.png',
           Title: 'Mortal Kombat 4',
           MaxPossible: '131',
-          'MAX(aw.HardcoreMode)': '1',
           NumAwarded: '131',
-          NumAwardedHC: '131',
           PctWon: '1.0000',
-          PctWonHC: '1.0000'
+          HardcoreMode: '1'
         },
         {
           GameID: '10116',
@@ -661,11 +659,9 @@ describe('RetroAchievementsClient', () => {
           ImageIcon: '/Images/042459.png',
           Title: 'Mortal Kombat 4',
           MaxPossible: '130',
-          'MAX(aw.HardcoreMode)': '1',
           NumAwarded: '130',
-          NumAwardedHC: '130',
           PctWon: '1.0000',
-          PctWonHC: '1.0000'
+          HardcoreMode: '0'
         }
       ];
 
@@ -695,11 +691,9 @@ describe('RetroAchievementsClient', () => {
           imageIcon: '/Images/042133.png',
           title: 'Mortal Kombat 4',
           maxPossible: 131,
-          'max(awHardcoreMode)': 1,
           numAwarded: 131,
-          numAwardedHc: 131,
           pctWon: 1,
-          pctWonHc: 1
+          hardcoreMode: 1
         },
         {
           gameId: 10116,
@@ -708,11 +702,9 @@ describe('RetroAchievementsClient', () => {
           imageIcon: '/Images/042459.png',
           title: 'Mortal Kombat 4',
           maxPossible: 130,
-          'max(awHardcoreMode)': 1,
           numAwarded: 130,
-          numAwardedHc: 130,
           pctWon: 1,
-          pctWonHc: 1
+          hardcoreMode: 0
         }
       ]);
     });
@@ -1086,7 +1078,6 @@ describe('RetroAchievementsClient', () => {
         TotalTruePoints: '31058',
         Permissions: '1',
         Untracked: '0',
-        ID: '117089',
         UserWallActive: '1',
         Motto: '',
         Rank: '4674',
@@ -1206,6 +1197,34 @@ describe('RetroAchievementsClient', () => {
           hardcoreAchieved: 0
         }
       ]);
+    });
+  });
+
+  describe('getUserPoints', () => {
+    it('returns points stats for the given username', async () => {
+      // ARRANGE
+      const mockUserPoints: fromModels.ApiUserPoints = {
+        Points: 10_000,
+        SoftcorePoints: 25
+      };
+
+      server = setupServer(
+        rest.get(
+          'https://retroachievements.org/API/API_GetUserPoints.php',
+          (_, res, ctx) => {
+            return res(ctx.json(mockUserPoints));
+          }
+        )
+      );
+
+      server.listen();
+
+      // ACT
+      const userPoints = await client.getUserPoints('xelnia');
+
+      // ASSERT
+      expect(userPoints.points).toEqual(10_000);
+      expect(userPoints.softcorePoints).toEqual(25);
     });
   });
 });

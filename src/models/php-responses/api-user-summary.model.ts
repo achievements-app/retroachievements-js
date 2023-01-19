@@ -25,7 +25,6 @@ export interface ApiUserSummary {
   TotalTruePoints: string;
   Permissions: string;
   Untracked: string;
-  ID: string;
   UserWallActive: string;
   Motto: string;
   Rank: string;

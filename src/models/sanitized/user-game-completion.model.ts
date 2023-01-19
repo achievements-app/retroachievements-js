@@ -5,9 +5,7 @@ export interface UserGameCompletion {
   imageIcon: string;
   title: string;
   maxPossible: number;
-  'max(awHardcoreMode)': number;
   numAwarded: number;
-  numAwardedHc: number;
   pctWon: number;
-  pctWonHc: number;
+  hardcoreMode: number;
 }
