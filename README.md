@@ -1,4 +1,6 @@
-<h3>This package is now deprecated. We recommend you use the officially-supported [@retroachievements/api](https://github.com/RetroAchievements/retroachievements-api-js) package instead.</h3>
+**This package is now deprecated and unmaintained. For new projects, use the officially-supported [@retroachievements/api](https://github.com/RetroAchievements/retroachievements-api-js) package instead.**
+
+---
 
 <h1 align="center">
   retroachievements-js
